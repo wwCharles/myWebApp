@@ -17,7 +17,7 @@ const Home = () => {
     const dateToday = Date.now();
     if (dateToday - createdAt <= 60000) {
       alert(
-        "Juiced23: A hub for car lovers to showcase builds and share stories. Community-driven flag any inappropriate posts. Reach out for functionality requests, bugs, or to join our team. Your data? We don't care. Ads keep us rolling—be cool."
+        "Juiced23: A hub for car lovers to showcase builds and share stories. Community-driven flag any inappropriate posts. Reach out for functionality requests, bugs, or to join our team. Your data? We don't care. Ads keep us rolling—be cool. *Don't make this site insta/tiktok keep it real*"
       );
     }
   };
