@@ -28,15 +28,6 @@ app.listen(3000, () => {
   console.log("port 3000");
 });
 
-//
-// app.get("/api/auth", (req, res) => {
-//   res.json({
-//     m: "no",
-//   });
-// });
-// app.use("/api/user", userRouter);
-//
-
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
