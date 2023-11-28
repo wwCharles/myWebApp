@@ -6,7 +6,7 @@ import {
   useGetFriendStatus,
   useGetUserbyId,
   useUpdateUser,
-} from "../api-calls/userApi";
+} from "../api-calls/UserApi";
 import { useGetAllUserPost } from "../api-calls/PostApi";
 import PostItem from "../components/PostItem";
 
