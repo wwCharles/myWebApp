@@ -58,62 +58,70 @@ export default function PostForm() {
   };
   //
   const initUpload = async () => {
-    if (images.length > 0 && images.length + formData.imageUrls.length < 5) {
-      setUpLoading(true);
+    try {
+      if (images.length > 0 && images.length + formData.imageUrls.length < 5) {
+        setUpLoading(true);
 
-      const promises = [];
+        const promises = [];
 
-      const options = {
-        maxSizeMB: 2,
-        maxWidthOrHeight: 1920,
-      };
+        const options = {
+          maxSizeMB: 2,
+          maxWidthOrHeight: 1920,
+        };
 
-      for (let i = 0; i < images.length; i++) {
-        const compressedImage = await imageCompression(images[i], options);
-        promises.push(storeImage(compressedImage));
-      }
-      Promise.all(promises)
-        .then((urls) => {
-          setFormData({
-            ...formData,
-            imageUrls: formData.imageUrls.concat(urls),
+        for (let i = 0; i < images.length; i++) {
+          const compressedImage = await imageCompression(images[i], options);
+          promises.push(storeImage(compressedImage));
+        }
+        Promise.all(promises)
+          .then((urls) => {
+            setFormData({
+              ...formData,
+              imageUrls: formData.imageUrls.concat(urls),
+            });
+            setImageUploadError(false);
+            setUpLoading(false);
+          })
+          .catch((err) => {
+            setImageUploadError(true);
+            setUpLoading(false);
           });
-          setImageUploadError(false);
-          setUpLoading(false);
-        })
-        .catch((err) => {
-          setImageUploadError(true);
-          setUpLoading(false);
-        });
-    } else {
-      setImageUploadError(true);
-      setUpLoading(false);
+      } else {
+        setImageUploadError(true);
+        setUpLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   //
   const storeImage = async (file) => {
-    return new Promise((resolve, reject) => {
-      const storage = getStorage(app);
-      const fileName = new Date().getTime() + "_" + file.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProg(Math.floor(progress));
-        },
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            resolve(downloadURL);
-          });
-        }
-      );
-    });
+    try {
+      return new Promise((resolve, reject) => {
+        const storage = getStorage(app);
+        const fileName = new Date().getTime() + "_" + file.name;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setProg(Math.floor(progress));
+          },
+          (error) => {
+            reject(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   //
   const handleChange = (e) => {

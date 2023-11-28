@@ -43,6 +43,7 @@ export default function PostItem({ card }) {
       console.log(error);
     }
   };
+
   const flagStatus = async (e) => {
     e.preventDefault();
     try {
