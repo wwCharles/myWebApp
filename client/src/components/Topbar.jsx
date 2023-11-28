@@ -23,6 +23,17 @@ export default function Topbar() {
           </h1>
         </Link>
 
+        <Link to={`/friends/${currentUser._id}`}>
+          <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:bg-red ">
+            friends
+          </h1>
+        </Link>
+        <Link to={`/create-post`}>
+          <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:bg-red ">
+            create
+          </h1>
+        </Link>
+
         <div className="flex gap-4">
           <button
             variant="ghost"
