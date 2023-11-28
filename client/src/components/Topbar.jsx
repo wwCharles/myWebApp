@@ -17,30 +17,31 @@ export default function Topbar() {
   return (
     <section className="topbar">
       <div className="flex-between px-2">
-        <Link to="/" className="flex gap-3 items-center">
+        <Link to="/" className="flex items-center">
           <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:bg-blue-500 ">
-            juiced
+            juiced23
           </h1>
         </Link>
 
         <Link to={`/friends/${currentUser._id}`}>
-          <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:bg-red ">
+          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-blue-500">
             friends
           </h1>
         </Link>
+
         <Link to={`/create-post`}>
-          <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:bg-red ">
+          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-blue-500 ">
             create
           </h1>
         </Link>
 
-        <div className="flex gap-4">
+        <div className="flex gap-8">
           <button
             variant="ghost"
             className="shad-button_ghost"
             onClick={handleLogout}
           >
-            <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6  hover:bg-red">
+            <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:bg-red">
               burnout
             </h1>
           </button>

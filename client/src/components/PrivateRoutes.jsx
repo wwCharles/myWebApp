@@ -2,12 +2,12 @@ import { useSelector } from "react-redux";
 import { Outlet, Navigate } from "react-router-dom";
 import Topbar from "./Topbar";
 import LeftSidebar from "./LeftSidebar";
-import Bottombar from "./Bottombar";
+// import Bottombar from "./Bottombar";
 
 export default function PrivateRoute() {
   const { currentUser } = useSelector((state) => state.user);
 
-  if (currentUser) {
+  if (!currentUser) {
     return (
       <div className="w-full md:flex overflow-y-scroll no-scrollbar">
         <Topbar />
@@ -17,9 +17,9 @@ export default function PrivateRoute() {
           <Outlet />
         </section>
 
-        <Bottombar />
+        {/* <Bottombar /> */}
       </div>
     );
   }
-  if (!currentUser) return <Navigate to="/oauth" />;
+  if (currentUser) return <Navigate to="/oauth" />;
 }
