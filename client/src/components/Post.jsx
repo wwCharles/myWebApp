@@ -11,7 +11,7 @@ import "swiper/swiper-bundle.css";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { app } from "../firebase";
 import { useDeletePost, useGetPostbyId } from "../api-calls/PostApi";
-import { useGetUserbyId } from "../api-calls/userApi";
+import { useGetUserbyId } from "../api-calls/UserApi";
 
 export default function Post() {
   SwiperCore.use([Navigation, Pagination]);

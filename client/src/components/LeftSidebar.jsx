@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useLogoutUser } from "../api-calls/userApi";
+import { useLogoutUser } from "../api-calls/UserApi";
 
 export default function LeftSidebar() {
   const { currentUser } = useSelector((state) => state.user);

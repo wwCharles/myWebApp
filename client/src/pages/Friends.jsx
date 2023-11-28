@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useGetUserbyId } from "../api-calls/userApi";
+import { useGetUserbyId } from "../api-calls/UserApi";
 
 export default function Friends() {
   const { id } = useParams();
