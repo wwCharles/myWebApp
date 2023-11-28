@@ -13,7 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/oauth" element={<OAuth />} />
-          {/*  */}
+
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />
             <Route path="/profile/:id" element={<Profile />} />
