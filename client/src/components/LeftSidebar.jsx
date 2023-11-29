@@ -18,23 +18,24 @@ export default function LeftSidebar() {
     <nav className="leftsidebar">
       <div className="flex flex-col">
         <Link to="/" className="flex gap-3 items-center">
-          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-blue-500">
+          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:bg-blue-500">
             juiced
+          </h1>
+        </Link>
+
+        <Link to={`/friends/${currentUser._id}`}>
+          <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:text-blue-500 ">
+            friends
+          </h1>
+        </Link>
+        <Link to={`/create-post`}>
+          <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:text-blue-500 ">
+            create
           </h1>
         </Link>
         <Link to={`/profile/${currentUser._id}`}>
           <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:text-red ">
             {currentUser.username}
-          </h1>
-        </Link>
-        <Link to={`/friends/${currentUser._id}`}>
-          <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:bg-red ">
-            friends
-          </h1>
-        </Link>
-        <Link to={`/create-post`}>
-          <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:bg-red ">
-            create
           </h1>
         </Link>
       </div>
@@ -44,7 +45,7 @@ export default function LeftSidebar() {
           className="shad-button pt-8"
           onClick={handleLogout}
         >
-          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-red ">
+          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:bg-red ">
             burnout
           </h1>
         </button>

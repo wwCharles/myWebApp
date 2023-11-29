@@ -35,25 +35,21 @@ export default function Topbar() {
           </h1>
         </Link>
 
-        <div className="flex gap-8">
-          <button
-            variant="ghost"
-            className="shad-button_ghost"
-            onClick={handleLogout}
-          >
-            <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:bg-red">
-              burnout
-            </h1>
-          </button>
-          <Link
-            to={`/profile/${currentUser._id}`}
-            className="flex-center gap-3"
-          >
-            <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-red">
-              profile
-            </h1>
-          </Link>
-        </div>
+        <Link to={`/profile/${currentUser._id}`} className="flex-center gap-3">
+          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-red">
+            profile
+          </h1>
+        </Link>
+
+        <button
+          variant="ghost"
+          className="shad-button_ghost"
+          onClick={handleLogout}
+        >
+          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:bg-red">
+            burnout
+          </h1>
+        </button>
       </div>
     </section>
   );
