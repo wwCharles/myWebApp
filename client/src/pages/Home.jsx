@@ -6,9 +6,9 @@ import PostItem from "../components/PostItem";
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [items, setItems] = useState([]);
+  const [hasMoreData, setHasMoreData] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
 
   const getAllPost = useGetAllPost();
 
@@ -23,13 +23,23 @@ const Home = () => {
   };
 
   const getData = async () => {
+    if (!hasMoreData) {
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     try {
-      const allPost = await getAllPost();
+      const startIndex = items.length;
+      const limit = 9;
 
-      setItems((prevItems) => [...prevItems, ...allPost]);
-      setPage((prevPage) => prevPage + 1);
+      const allPost = await getAllPost({ startIndex, limit });
+
+      if (allPost.length === 0) {
+        setHasMoreData(false);
+        return;
+      }
+      setItems((prevItems) => [...new Set([...prevItems, ...allPost])]);
     } catch (error) {
       setError(error);
     } finally {
@@ -37,43 +47,46 @@ const Home = () => {
     }
   };
 
+  const debouncedGetData = debounce(getData, 300);
+
   const handleScroll = () => {
+    const scrollContainer = document.querySelector(".home-container");
+    const scrollTriggerPosition =
+      scrollContainer.offsetHeight / 2 + scrollContainer.offsetTop;
+
     if (
-      window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight ||
-      isLoading
+      scrollContainer.scrollTop + scrollContainer.clientHeight >=
+        scrollTriggerPosition &&
+      !isLoading &&
+      hasMoreData
     ) {
-      return;
+      debouncedGetData();
     }
-    getData();
   };
+
+  useEffect(() => {
+    const scrollContainer = document.querySelector(".home-container");
+    scrollContainer.addEventListener("scroll", handleScroll);
+
+    return () => {
+      scrollContainer.removeEventListener("scroll", handleScroll);
+    };
+  }, [isLoading]);
 
   useEffect(() => {
     getData();
     newUser();
   }, []);
 
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, [isLoading]);
-
-  useEffect(() => {
-    const debouncedScroll = debounce(handleScroll, 300);
-    window.addEventListener("scroll", debouncedScroll);
-    return () => window.removeEventListener("scroll", debouncedScroll);
-  }, [isLoading]);
-
   return (
-    <div className="flex flex-1  ">
-      <div className="home-container  ">
+    <div className="flex flex-1 ">
+      <div className="home-container">
         <div className="home-posts">
           <div>
             <ul className="flex flex-col flex-1 gap-9 w-full">
               {items.map((item, index) => (
                 <li className="flex justify-center w-full" key={index}>
                   <PostItem card={item} />
-                  {index}
                 </li>
               ))}
             </ul>
@@ -88,15 +101,12 @@ const Home = () => {
 
 export default Home;
 
-// Debounce utility function
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
       func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
+    }, delay);
   };
 }

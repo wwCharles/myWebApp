@@ -31,17 +31,17 @@ export const getPosts = async (req, res, next) => {
     const sort = req.query.sort || "createdAt";
     const order = req.query.order || "desc";
 
-    const posts = await Post.find({
-      caption: { $regex: searchTerm, $options: "i" },
-      // address: { $regex: searchTerm, $options: "i" },
-      // type,
-      // price,
-      // furnished,
-      // parking,
-    })
-      .sort({
-        [sort]: order,
-      })
+    // const posts = await Post.find({
+    //   caption: { $regex: searchTerm, $options: "i" },
+    // })
+    //   .sort({
+    //     [sort]: order,
+    //   })
+    //   .limit(limit)
+    //   .skip(startIndex);
+
+    const posts = await Post.find()
+      .sort({ [sort]: order })
       .limit(limit)
       .skip(startIndex);
 
