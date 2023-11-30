@@ -65,8 +65,8 @@ const Home = () => {
   }, [isLoading]);
 
   return (
-    <div className="flex flex-1 overflow-y-scroll no-scrollbar">
-      <div className="home-container overflow-y-scroll no-scrollbar">
+    <div className="flex flex-1">
+      <div className="home-container">
         <div className="home-posts">
           <div>
             <ul className="flex flex-col flex-1 gap-9 w-full">
