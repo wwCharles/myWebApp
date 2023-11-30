@@ -108,19 +108,19 @@ export default function PostItem({ card }) {
               <div className="flex gap-12 items-center justify-start">
                 <button
                   onClick={likeStatus}
-                  className="flex text-lg md:text-xl h3-bold md:h2-bold  mt-4"
+                  className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
                 >
                   {likeStat ? "🤍" : "♡"}
                 </button>
                 <button
                   onClick={flagStatus}
-                  className="flex text-lg md:text-xl h3-bold md:h2-bold  mt-4"
+                  className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
                 >
                   {flagStat ? "🚩" : "🏳️"}
                 </button>
                 <Link
                   to={`/post/${card._id}`}
-                  className="flex text-lg md:text-xl h3-bold md:h2-bold  mt-4"
+                  className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4 text-light-4"
                 >
                   creator
                 </Link>

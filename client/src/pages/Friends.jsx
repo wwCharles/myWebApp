@@ -41,17 +41,15 @@ export default function Friends() {
             <p>Loading...</p>
           ) : error ? (
             <p>Error loading friends. Please try again.</p>
-          ) : friendsProfile?.length ? (
+          ) : friendsProfile.length ? (
             <ul className="flex flex-col flex-1 gap-9 w-full">
               {friendsProfile.map((friend) => (
                 <li className="flex justify-center w-full" key={friend._id}>
                   <Link
+                    className="xl:text-left h3-bold md:h1-semibold w-full"
                     to={`/profile/${friend._id}`}
-                    className="hover:bg-blue-500"
                   >
-                    <p className="xl:text-left h3-bold md:h1-semibold w-full">
-                      {friend.username}
-                    </p>
+                    {friend.username}
                   </Link>
                 </li>
               ))}
@@ -64,3 +62,4 @@ export default function Friends() {
     </div>
   );
 }
+// className = "xl:text-left h3-bold md:h1-semibold w-full";

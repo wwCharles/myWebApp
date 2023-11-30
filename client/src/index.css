@@ -110,12 +110,14 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #5c5c7b;
+    /* background: #5c5c7b; */
+    background: grey;
     border-radius: 50px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #7878a3;
+    /* background: #7878a3; */
+    background: grey;
   }
 
   /* removed items-center */
@@ -147,7 +149,7 @@
 
   /* Home */
   .home-container {
-    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
+    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10  md:px-8 lg:p-14 custom-scrollbar;
   }
 
   .home-posts {

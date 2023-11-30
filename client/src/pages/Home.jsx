@@ -65,14 +65,15 @@ const Home = () => {
   }, [isLoading]);
 
   return (
-    <div className="flex flex-1 overflow-y-scroll ">
-      <div className="home-container overflow-y-scroll ">
+    <div className="flex flex-1  ">
+      <div className="home-container  ">
         <div className="home-posts">
           <div>
             <ul className="flex flex-col flex-1 gap-9 w-full">
-              {items.map((item) => (
-                <li className="flex justify-center w-full" key={item._id}>
+              {items.map((item, index) => (
+                <li className="flex justify-center w-full" key={index}>
                   <PostItem card={item} />
+                  {index}
                 </li>
               ))}
             </ul>

@@ -199,6 +199,7 @@ export default function PostForm() {
         type="button"
         className="flex  text-lg md:text-xl h3-bold md:h2-bold hover:text-blue-500 mt-4"
         onClick={selectImages}
+        disabled={loading || uploading}
       >
         {!text ? (
           <p>
@@ -218,6 +219,7 @@ export default function PostForm() {
         className="h3-bold md:h2-bold bg-dark-1 max-h-[200px] min-h-[100px]"
         maxLength={200}
         onChange={handleChange}
+        disabled={loading || uploading}
       />
       <input
         type="text"
@@ -226,6 +228,7 @@ export default function PostForm() {
         className="h3-bold md:h2-bold bg-dark-1"
         maxLength={26}
         onChange={handleChange}
+        disabled={loading || uploading}
       />
 
       <div className="flex gap-4 items-center justify-start">

@@ -22,9 +22,9 @@ export default {
         "dark-3": "#101012",
         "dark-4": "#1F1F22",
         "light-1": "#FFFFFF",
-        "light-2": "#EFEFEF",
-        "light-3": "#7878A3",
-        "light-4": "#5C5C7B",
+        "light-2": "grey",
+        "light-3": "#dadae3",
+        "light-4": "#7d7d80",
       },
       screens: {
         xs: "480px",
