@@ -12,6 +12,7 @@ import PostItem from "../components/PostItem";
 
 export default function Profile() {
   const { currentUser } = useSelector((state) => state.user);
+  const [me, setMe] = useState(false);
   const { id } = useParams();
   const [currentProfile, setCurrentProfile] = useState("");
   const [formData, setFormData] = useState({});
@@ -28,29 +29,27 @@ export default function Profile() {
   const getUserbyId = useGetUserbyId();
   const getAllUserPost = useGetAllUserPost();
   // const deleteAccount = useDeleteAccount();
+  // console.log(showEmail);
 
   const showProfile = async () => {
     try {
+      setShowEmail(false);
       const profile = await getUserbyId(id);
       const profile1 = await getUserbyId(currentUser._id);
+
       setCurrentProfile(profile);
 
-      if (profile1.friends.includes(profile._id)) {
-        setFriendStat(true);
-      }
+      const areFriends = profile1.friends.includes(profile._id);
+      const emailVisible = profile.friends.includes(profile1._id);
 
-      if (
-        profile1.friends.includes(profile._id) &&
-        profile.friends.includes(profile1._id)
-      ) {
+      setFriendStat(areFriends);
+
+      if (areFriends && emailVisible) {
         setShowEmail(true);
       }
-      getData();
     } catch (error) {
-      if (error) {
-        showProfile();
-      }
-      console.log(error.message);
+      // Handle the error, e.g., show a user-friendly error message
+      console.error("Error fetching profile:", error.message);
     }
   };
 
@@ -91,7 +90,14 @@ export default function Profile() {
     try {
       const allUserPost = await getAllUserPost(id);
 
-      setItems((prevItems) => [...prevItems, ...allUserPost]);
+      const sortedPosts = allUserPost.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+
+        return dateB - dateA;
+      });
+
+      setItems(sortedPosts);
       setPage((prevPage) => prevPage + 1);
     } catch (error) {
       setError(error);
@@ -118,7 +124,8 @@ export default function Profile() {
 
   useEffect(() => {
     showProfile();
-  }, []);
+    getData();
+  }, [id]);
 
   return (
     <div className="flex flex-1 overflow-y-scroll no-scrollbar">
@@ -129,7 +136,7 @@ export default function Profile() {
               <div className="gap-10">
                 <input
                   type="text"
-                  defaultValue={currentProfile?.username}
+                  defaultValue={currentProfile.username}
                   id="username"
                   className="shad-input h3-bold md:h2-bold w-auto"
                   maxLength={64}
@@ -151,7 +158,7 @@ export default function Profile() {
             ) : (
               <>
                 <h1 className="xl:text-left h3-bold md:h1-semibold w-full">
-                  {currentProfile?.username}
+                  {currentProfile.username}
                 </h1>
 
                 <button
@@ -166,7 +173,7 @@ export default function Profile() {
             )}
             {showEmail && (
               <p className="small-regular md:body-medium text-light-4 mt-6">
-                {currentProfile?.email}
+                {currentProfile.email}
               </p>
             )}
           </div>
