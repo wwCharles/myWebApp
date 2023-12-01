@@ -58,7 +58,6 @@ export const getUserPosts = async (req, res, next) => {
 };
 
 export const getAllUserPosts = async (req, res, next) => {
-  // console.log(req.params.id);
   try {
     const posts = await Post.find({ userRef: req.params.id });
     res.status(200).json(posts);
@@ -71,9 +70,7 @@ export const friendStat = async (req, res, next) => {
   try {
     const user1 = await User.findById(req.user.id);
     const user2 = await req.params.id;
-    // console.log("user1", user1);
-    // console.log("user2", user2);
-    // res.status(200).json(true);
+
     if (user1.friends.includes(user2)) {
       await User.updateOne(user1, { $pull: { friends: user2 } });
       return res.status(200).json(false);
@@ -81,8 +78,6 @@ export const friendStat = async (req, res, next) => {
       await User.updateOne(user1, { $push: { friends: user2 } });
       return res.status(200).json(true);
     }
-
-    // res.status(200);
   } catch (error) {
     next(error);
   }

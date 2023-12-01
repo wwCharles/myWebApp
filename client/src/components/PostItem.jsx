@@ -19,11 +19,9 @@ import {
 export default function PostItem({ card }) {
   SwiperCore.use([Navigation, Pagination]);
   const { currentUser } = useSelector((state) => state.user);
-  // const user = useParams();
   const [likeStat, setLikedStat] = useState(false);
   const [flagStat, setFlagStat] = useState(false);
   const [poleposition, setPolePosition] = useState(false);
-  // const [post, setPost] = useState([]);
 
   const getPostbyId = useGetPostbyId();
   const likePost = useLikePost();

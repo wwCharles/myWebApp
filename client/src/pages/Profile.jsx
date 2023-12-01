@@ -28,8 +28,6 @@ export default function Profile() {
   const getFriendStat = useGetFriendStatus();
   const getUserbyId = useGetUserbyId();
   const getAllUserPost = useGetAllUserPost();
-  // const deleteAccount = useDeleteAccount();
-  // console.log(showEmail);
 
   const showProfile = async () => {
     try {
@@ -48,7 +46,6 @@ export default function Profile() {
         setShowEmail(true);
       }
     } catch (error) {
-      // Handle the error, e.g., show a user-friendly error message
       console.error("Error fetching profile:", error.message);
     }
   };
@@ -79,6 +76,7 @@ export default function Profile() {
     try {
       const value = await getFriendStat(currentProfile._id);
       setFriendStat(value);
+      showProfile();
     } catch (error) {
       console.log(error);
     }

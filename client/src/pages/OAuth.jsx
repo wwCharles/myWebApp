@@ -53,7 +53,6 @@ export default function OAuth() {
             >
               {loading ? "Juiced23" : "Google"}
             </h1>
-            {/* {loading && <p>Loading...</p>} */}
           </button>
         </div>
       </section>

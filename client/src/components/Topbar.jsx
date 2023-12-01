@@ -37,7 +37,7 @@ export default function Topbar() {
 
         <Link to={`/profile/${currentUser._id}`} className="flex-center gap-3">
           <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-red">
-            profile
+            {currentUser.username}
           </h1>
         </Link>
 

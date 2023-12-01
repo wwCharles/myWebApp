@@ -31,15 +31,6 @@ export const getPosts = async (req, res, next) => {
     const sort = req.query.sort || "createdAt";
     const order = req.query.order || "desc";
 
-    // const posts = await Post.find({
-    //   caption: { $regex: searchTerm, $options: "i" },
-    // })
-    //   .sort({
-    //     [sort]: order,
-    //   })
-    //   .limit(limit)
-    //   .skip(startIndex);
-
     const posts = await Post.find()
       .sort({ [sort]: order })
       .limit(limit)
@@ -55,23 +46,20 @@ export const likePost = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id);
     const user = await req.user.id;
-    // console.log("fuck", post);
-    // console.log("user", user);
+
     if (!post) {
       return next(errorHandler(404, "post not found!"));
     }
 
     if (post.likes.includes(user)) {
       await Post.updateOne(post, { $pull: { likes: user } });
-      // console.log("delete", post);
+
       return res.status(200).json(false);
     } else {
       await Post.updateOne(post, { $push: { likes: user } });
-      // console.log("add", post);
+
       return res.status(200).json(true);
     }
-
-    // res.status(200);
   } catch (error) {
     next(error);
   }
@@ -87,15 +75,13 @@ export const flagPost = async (req, res, next) => {
 
     if (post.redflag.includes(user)) {
       await Post.updateOne(post, { $pull: { redflag: user } });
-      // console.log("delete", post);
+
       return res.status(200).json(false);
     } else {
       await Post.updateOne(post, { $push: { redflag: user } });
-      // console.log("add", post);
+
       return res.status(200).json(true);
     }
-
-    // res.status(200);
   } catch (error) {
     next(error);
   }
@@ -103,7 +89,6 @@ export const flagPost = async (req, res, next) => {
 
 export const deletePost = async (req, res, next) => {
   const post = await Post.findById(req.params.id);
-  // console.log(post);
 
   if (!post) {
     return next(errorHandler(404, "post not found!"));

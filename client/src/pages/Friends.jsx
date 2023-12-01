@@ -62,4 +62,3 @@ export default function Friends() {
     </div>
   );
 }
-// className = "xl:text-left h3-bold md:h1-semibold w-full";

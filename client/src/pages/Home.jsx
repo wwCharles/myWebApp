@@ -17,7 +17,7 @@ const Home = () => {
     const dateToday = Date.now();
     if (dateToday - createdAt <= 60000) {
       alert(
-        "Juiced23: A hub for car lovers to showcase builds and share stories. Community-driven flag any inappropriate posts. Reach out for functionality requests, bugs, or to join our team. Your data? We don't care. Ads keep us rolling—be cool. *Don't make this site insta/tiktok keep it real*"
+        "Juiced23: A hub for everyhing ice, to showcase builds and share stories.\nCommunity-driven flag any inappropriate post.\nReach out for functionality requests, bugs, or to join our team.\nYour data? We don't care.\nAds keep us rolling—be cool.\n*Don't make this site ig/tiktok keep it real*"
       );
     }
   };
