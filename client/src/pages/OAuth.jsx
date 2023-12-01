@@ -35,8 +35,10 @@ export default function OAuth() {
       });
       const data = await res.json();
 
-      dispatch(signInSuccess(data));
-      navigate("/");
+      if (typeof data === "object" && data != null) {
+        dispatch(signInSuccess(data));
+        navigate("/", { replace: true });
+      }
     } catch (error) {
       dispatch(signInFailure(error));
     }

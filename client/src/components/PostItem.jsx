@@ -132,7 +132,7 @@ export default function PostItem({ card }) {
             <div className="md:text-xl h3-bold md:h2-bold mt-2 ">
               {card.location && (
                 <p>
-                  ✆ <sub>{card.location}</sub>
+                  <sub>・{card.location}</sub>
                 </p>
               )}
               {card.caption && <p>"{card.caption}"</p>}
