@@ -80,7 +80,7 @@ export default function PostItem({ card }) {
     if (card.redflag.includes(currentUser._id)) {
       setFlagStat(true);
     }
-    if (card.likes.length >= 1000) {
+    if (card.likes.length >= 100) {
       setPolePosition(true);
     }
   }, [card.likes, card.redflag]);
@@ -108,7 +108,16 @@ export default function PostItem({ card }) {
                   onClick={likeStatus}
                   className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
                 >
-                  {likeStat ? "🤍" : "♡"}
+                  {likeStat ? (
+                    <>
+                      🤍
+                      <sub>
+                        <small>{card.likes.length}</small>
+                      </sub>
+                    </>
+                  ) : (
+                    "♡"
+                  )}
                 </button>
                 <button
                   onClick={flagStatus}
