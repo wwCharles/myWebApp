@@ -12,7 +12,6 @@ import PostItem from "../components/PostItem";
 
 export default function Profile() {
   const { currentUser } = useSelector((state) => state.user);
-  const [me, setMe] = useState(false);
   const { id } = useParams();
   const [currentProfile, setCurrentProfile] = useState("");
   const [formData, setFormData] = useState({});
@@ -46,7 +45,7 @@ export default function Profile() {
         setShowEmail(true);
       }
     } catch (error) {
-      console.error("Error fetching profile:", error.message);
+      console.error("Error fetching profile", error.message);
     }
   };
 
@@ -126,66 +125,68 @@ export default function Profile() {
   }, [id]);
 
   return (
-    <div className="flex flex-1 overflow-y-scroll no-scrollbar">
-      <div className="home-container overflow-y-scroll no-scrollbar">
+    <div className="flex flex-1 ">
+      <div className="home-container ">
         <div className="home-posts">
-          <div className="h3-bold md:h2-bold text-left w-full">
-            {currentUser._id === id ? (
-              <div className="gap-10">
-                <input
-                  type="text"
-                  defaultValue={currentProfile.username}
-                  id="username"
-                  className="shad-input h3-bold md:h2-bold w-auto"
-                  maxLength={64}
-                  onChange={handleChange}
-                />
-                <button
-                  className="flex h3-bold md:h2-bold  hover:text-blue-500"
-                  onClick={handleUpdateUser}
-                >
-                  Update
-                </button>
-                {/* <button
+          {!isLoading && (
+            <div className="h3-bold md:h2-bold text-left w-full">
+              {currentUser._id === id ? (
+                <div className="gap-10">
+                  <input
+                    type="text"
+                    placeholder={currentProfile.username}
+                    id="username"
+                    className="shad-input h3-bold md:h2-bold w-auto"
+                    maxLength={64}
+                    onChange={handleChange}
+                  />
+                  <button
+                    className="flex h3-bold md:h2-bold  hover:text-blue-500"
+                    onClick={handleUpdateUser}
+                  >
+                    Update
+                  </button>
+                  {/* <button
                   className="flex h3-bold md:h2-bold text-dark-4  hover:text-red"
                   onClick={handleDeleteUser}
                 >
                   Delete Account
                 </button> */}
-              </div>
-            ) : (
-              <>
-                <h1 className="xl:text-left h3-bold md:h1-semibold w-full">
-                  {currentProfile.username}
-                </h1>
+                </div>
+              ) : (
+                <>
+                  <h1 className="xl:text-left h3-bold md:h1-semibold w-full">
+                    {currentProfile.username}
+                  </h1>
 
-                <button
-                  className="flex h3-bold md:h2-bold  hover:text-blue-500"
-                  onClick={handleFriend}
-                >
-                  <sub className="mt-3">
-                    {friendStat ? "unFriend" : "Friend"}
-                  </sub>
-                </button>
-              </>
-            )}
-            {showEmail && (
-              <p className="small-regular md:body-medium text-light-4 mt-6">
-                {currentProfile.email}
-              </p>
-            )}
-          </div>
+                  <button
+                    className="flex h3-bold md:h2-bold  hover:text-blue-500"
+                    onClick={handleFriend}
+                  >
+                    <sub className="mt-3">
+                      {friendStat ? "unFriend" : "Friend"}
+                    </sub>
+                  </button>
+                </>
+              )}
+              {showEmail && (
+                <p className="small-regular md:body-medium text-light-4 mt-6">
+                  {currentProfile.email}
+                </p>
+              )}
+              <ul className="flex flex-col flex-1 gap-10 mt-5 w-full">
+                {items.map((item) => (
+                  <li className="flex justify-center w-full" key={item._id}>
+                    <PostItem card={item} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div>
-            <ul className="flex flex-col flex-1 gap-9 w-full">
-              {items.map((item) => (
-                <li className="flex justify-center w-full" key={item._id}>
-                  <PostItem card={item} />
-                </li>
-              ))}
-            </ul>
-            {isLoading && <p>Loading...</p>}
-            {error && <p>Error, reload. </p>}
+            {isLoading && <p>loading...</p>}
+            {error && <p>error, reload. </p>}
           </div>
         </div>
       </div>

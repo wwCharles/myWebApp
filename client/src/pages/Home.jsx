@@ -15,9 +15,9 @@ const Home = () => {
   const newUser = () => {
     const createdAt = Date.parse(currentUser.createdAt);
     const dateToday = Date.now();
-    if (dateToday - createdAt <= 60000) {
+    if (dateToday - createdAt <= 10000) {
       alert(
-        "Juiced23: A hub for everyhing ice, to showcase builds and share stories.\nCommunity-driven flag any inappropriate post.\nReach out for functionality requests, bugs, or to join our team info@juiced23.com.\nYour data? We don't care.\nAds keep us rolling—be cool.\n*Don't make this site ig/tiktok keep it real*"
+        "Juiced23 a hub to showcase builds and share stories.\nCommunity-driven flag any inappropriate post.\nReach out for functionality requests, bugs, or to join our team info@juiced23.com.\nYour data? We don't care.\nAds keep us rolling—be cool."
       );
     }
   };
@@ -31,9 +31,9 @@ const Home = () => {
     setError(null);
     try {
       const startIndex = items.length;
-      const limit = 9;
+      const batchSize = 50;
 
-      const allPost = await getAllPost({ startIndex, limit });
+      const allPost = await getAllPost({ startIndex, limit: batchSize });
 
       if (allPost.length === 0) {
         setHasMoreData(false);
@@ -74,8 +74,11 @@ const Home = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    getData();
-    newUser();
+    const fetchdata = async () => {
+      getData();
+      newUser();
+    };
+    fetchdata();
   }, []);
 
   return (
@@ -83,15 +86,15 @@ const Home = () => {
       <div className="home-container">
         <div className="home-posts">
           <div>
-            <ul className="flex flex-col flex-1 gap-9 w-full">
+            <ul className="flex flex-col flex-1 gap-10 w-full">
               {items.map((item, index) => (
                 <li className="flex justify-center w-full" key={index}>
                   <PostItem card={item} />
                 </li>
               ))}
             </ul>
-            {isLoading && <p>Loading...</p>}
-            {error && <p>Error, reload. </p>}
+            {isLoading && <p>loading...</p>}
+            {error && <p>error, reload. </p>}
           </div>
         </div>
       </div>

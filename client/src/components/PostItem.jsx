@@ -22,11 +22,19 @@ export default function PostItem({ card }) {
   const [likeStat, setLikedStat] = useState(false);
   const [flagStat, setFlagStat] = useState(false);
   const [poleposition, setPolePosition] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(0);
 
   const getPostbyId = useGetPostbyId();
   const likePost = useLikePost();
   const flagPost = useFlagPost();
   const deletePost = useDeletePost();
+
+  const handleImageLoad = () => {
+    setImagesLoaded((prev) => prev + 1);
+  };
+
+  const allImagesLoaded = imagesLoaded === card.imageUrls.length;
+  // console.log(imagesLoaded);
 
   const likeStatus = async (e) => {
     e.preventDefault();
@@ -87,21 +95,25 @@ export default function PostItem({ card }) {
 
   return (
     <div className="flex flex-col gap-4 w-full max-w-5xl ">
-      <div className="flex flex-center flex-col gap-10">
-        <div className="file_uploader-img a:w-[280px] b:w-[370px] c:w-[400px] w:[20px] sm:w-[640px] md:w-[680px] lg:w-[680px] xl:w-[1024px] ">
-          <>
-            <Swiper
-              autoHeight={true}
-              pagination={{ clickable: true }}
-              spaceBetween={10}
-              slidesPerView={1}
-            >
-              {card.imageUrls.map((imageUrl, index) => (
-                <SwiperSlide key={index}>
-                  <img src={imageUrl} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+      <div className="flex flex-center flex-col gap-10 ">
+        <div className="file_uploader-img a:w-[280px] b:w-[370px] c:w-[400px] w:[20px] sm:w-[640px] md:w-[680px] lg:w-[680px] xl:w-[1024px]">
+          <Swiper
+            autoHeight={true}
+            pagination={{ clickable: true }}
+            spaceBetween={10}
+            slidesPerView={1}
+          >
+            {card.imageUrls.map((imageUrl, index) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={imageUrl}
+                  onLoad={handleImageLoad}
+                  className="animate-in slide-in-from-bottom-48"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          {allImagesLoaded && (
             <>
               <div className="flex gap-12 items-center justify-start">
                 <button
@@ -137,17 +149,18 @@ export default function PostItem({ card }) {
                   </p>
                 )}
               </div>
+
+              <div className="md:text-xl h3-bold md:h2-bold mt-2 ">
+                {card.location && (
+                  <p>
+                    <sub>・{card.location}</sub>
+                  </p>
+                )}
+                {card.caption && <p>"{card.caption}"</p>}
+              </div>
+              <hr className="border-dark-4" />
             </>
-            <div className="md:text-xl h3-bold md:h2-bold mt-2 ">
-              {card.location && (
-                <p>
-                  <sub>・{card.location}</sub>
-                </p>
-              )}
-              {card.caption && <p>"{card.caption}"</p>}
-            </div>
-            <hr className="border-dark-4" />
-          </>
+          )}
         </div>
       </div>
     </div>

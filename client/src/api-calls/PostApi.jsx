@@ -43,7 +43,7 @@ export function useGetPostbyId() {
 }
 
 export function useGetAllPost() {
-  const getAllPost = async ({ startIndex = 0, limit = 9 }) => {
+  const getAllPost = async ({ startIndex = 0, limit }) => {
     try {
       const res = await fetch(
         `/api/post/get?startIndex=${startIndex}&limit=${limit}`

@@ -34,19 +34,15 @@ export default function Friends() {
   }, [id]);
 
   return (
-    <div className="flex flex-1 overflow-y-scroll no-scrollbar">
-      <div className="flex flex-col py-10 overflow-y-scroll no-scrollbar">
+    <div className="flex flex-1 ">
+      <div className="flex flex-col py-10 ">
         <div className="home-posts">
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p>Error loading friends. Please try again.</p>
-          ) : friendsProfile.length ? (
+          {friendsProfile?.length && (
             <ul className="flex flex-col flex-1 gap-9 w-full">
               {friendsProfile.map((friend) => (
                 <li className="flex justify-center w-full" key={friend._id}>
                   <Link
-                    className="xl:text-left h3-bold md:h1-semibold w-full"
+                    className="xl:text-left h3-bold md:h1-semibold w-full animate-in slide-in-from-bottom-48"
                     to={`/profile/${friend._id}`}
                   >
                     {friend.username}
@@ -54,10 +50,10 @@ export default function Friends() {
                 </li>
               ))}
             </ul>
-          ) : (
-            <p>No friends to display.</p>
           )}
         </div>
+        {/* {isLoading && <p>loading...</p>} */}
+        {error && <p>error, reload. </p>}
       </div>
     </div>
   );

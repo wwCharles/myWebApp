@@ -24,7 +24,7 @@ export const getPost = async (req, res, next) => {
 
 export const getPosts = async (req, res, next) => {
   try {
-    const limit = parseInt(req.query.limit) || 9;
+    const limit = parseInt(req.query.limit) || 20;
     const startIndex = parseInt(req.query.startIndex) || 0;
 
     const searchTerm = req.query.searchTerm || "";
