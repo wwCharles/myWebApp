@@ -96,7 +96,7 @@ export default function Post() {
               >
                 {currentPost.imageUrls.map((imageUrl, index) => (
                   <SwiperSlide key={index}>
-                    <img src={imageUrl} />
+                    <img loading="lazy" src={imageUrl} />
                   </SwiperSlide>
                 ))}
               </Swiper>

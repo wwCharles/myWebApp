@@ -74,9 +74,9 @@ export default function OAuth() {
       </section>
       <img
         loading="lazy"
-        src={`/images/${randomNumber}.jpeg`}
+        src={`/images/${randomNumber}.webp`}
         className="xl:block h-screen w-2/3 object-cover bg-no-repeat"
-        alt="Random Car"
+        alt="Cool Car"
       />
     </div>
   );
