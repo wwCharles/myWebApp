@@ -7,11 +7,12 @@ import {
 } from "../redux/user/userSlice";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function OAuth() {
   const { loading } = useSelector((state) => state.user);
   const [randomNumber] = useState(Math.floor(Math.random() * 10) + 1);
+  const [sectionLoaded, setSectionLoaded] = useState(false);
   //
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,13 +44,26 @@ export default function OAuth() {
       dispatch(signInFailure(error));
     }
   };
+
+  useEffect(() => {
+    const sectionTimeout = setTimeout(() => {
+      setSectionLoaded(true);
+    }, 700);
+
+    // Clear the timeout when the component unmounts
+    return () => clearTimeout(sectionTimeout);
+  }, []);
   return (
     <div className="flex overflow-y-scroll no-scrollbar">
       <section className="flex flex-1 justify-center items-center flex-col py-10">
-        <div className="sm:w-420 flex-center flex-col animate-pulse duration-10000">
+        <div
+          className={`sm:w-420 flex-center flex-col animate-pulse duration-10000 ${
+            sectionLoaded ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <button onClick={handleGoogleClick}>
             <h1
-              className={`h3-bold md:h2-bold pt-5 sm:pt-12 ${
+              className={`h3-bold md:h2-bold pt-5 sm:pt-12  ${
                 loading ? "text-blue-500" : "text-red"
               }`}
             >
@@ -58,7 +72,6 @@ export default function OAuth() {
           </button>
         </div>
       </section>
-
       <img
         loading="lazy"
         src={`/images/${randomNumber}.jpeg`}
