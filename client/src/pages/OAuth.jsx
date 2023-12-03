@@ -75,7 +75,7 @@ export default function OAuth() {
       <img
         loading="lazy"
         src={`/images/${randomNumber}.webp`}
-        className={`xl:block h-screen w-2/3 object-cover bg-no-repeat opacity-0 transition-opacity duration-700 ${
+        className={`xl:block h-screen w-2/3 object-cover bg-no-repeat opacity-0 transition-opacity duration-800 ${
           sectionLoaded && "opacity-100"
         } `}
         alt="Cool Car"
