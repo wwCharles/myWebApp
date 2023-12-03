@@ -9,6 +9,7 @@ const Home = () => {
   const [hasMoreData, setHasMoreData] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [lazy, setLazy] = useState(false);
 
   const getAllPost = useGetAllPost();
 
@@ -31,7 +32,7 @@ const Home = () => {
     setError(null);
     try {
       const startIndex = items.length;
-      const batchSize = 50;
+      const batchSize = 40;
 
       const allPost = await getAllPost({ startIndex, limit: batchSize });
 
@@ -81,12 +82,24 @@ const Home = () => {
     fetchdata();
   }, []);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setLazy(true);
+    }, 800);
+
+    return () => clearInterval(intervalId);
+  }, [isLoading]);
+
   return (
     <div className="flex flex-1 ">
       <div className="home-container">
         <div className="home-posts">
           <div>
-            <ul className="flex flex-col flex-1 gap-10 w-full">
+            <ul
+              className={`flex flex-col flex-1 gap-10 w-full opacity-0 transition-opacity duration-1000 ${
+                lazy && "opacity-100"
+              } `}
+            >
               {items.map((item, index) => (
                 <li className="flex justify-center w-full" key={index}>
                   <PostItem card={item} />

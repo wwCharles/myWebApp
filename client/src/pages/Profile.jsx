@@ -22,6 +22,7 @@ export default function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
+  const [lazy, setLazy] = useState(false);
 
   const updateUser = useUpdateUser();
   const getFriendStat = useGetFriendStatus();
@@ -124,12 +125,24 @@ export default function Profile() {
     getData();
   }, [id]);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setLazy(true);
+    }, 800);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="flex flex-1 ">
       <div className="home-container ">
         <div className="home-posts">
           {!isLoading && (
-            <div className="h3-bold md:h2-bold text-left w-full">
+            <div
+              className={`h3-bold md:h2-bold text-left w-full opacity-0 transition-opacity duration-1000 ${
+                lazy && "opacity-100"
+              }`}
+            >
               {currentUser._id === id ? (
                 <div className="gap-10">
                   <input
@@ -147,11 +160,11 @@ export default function Profile() {
                     Update
                   </button>
                   {/* <button
-                  className="flex h3-bold md:h2-bold text-dark-4  hover:text-red"
-                  onClick={handleDeleteUser}
-                >
-                  Delete Account
-                </button> */}
+                    className="flex h3-bold md:h2-bold text-dark-4  hover:text-red"
+                    onClick={handleDeleteUser}
+                  >
+                    Delete Account
+                  </button> */}
                 </div>
               ) : (
                 <>
