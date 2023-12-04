@@ -48,7 +48,7 @@ const Home = () => {
     }
   };
 
-  const debouncedGetData = debounce(getData, 300);
+  const debouncedGetData = debounce(getData, 700);
 
   const handleScroll = () => {
     const scrollContainer = document.querySelector(".home-container");

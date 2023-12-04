@@ -48,7 +48,7 @@ export default function OAuth() {
   useEffect(() => {
     const sectionTimeout = setTimeout(() => {
       setSectionLoaded(true);
-    }, 700);
+    }, 2000);
 
     // Clear the timeout when the component unmounts
     return () => clearTimeout(sectionTimeout);
@@ -75,7 +75,7 @@ export default function OAuth() {
       <img
         loading="lazy"
         src={`/images/${randomNumber}.webp`}
-        className={`xl:block h-screen w-2/3 object-cover bg-no-repeat opacity-0 transition-opacity duration-800 ${
+        className={`xl:block h-screen w-2/3 object-cover bg-no-repeat opacity-0 transition-opacity duration-1000 ${
           sectionLoaded && "opacity-100"
         } `}
         alt="Cool Car"

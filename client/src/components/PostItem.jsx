@@ -106,7 +106,6 @@ export default function PostItem({ card }) {
             {card.imageUrls.map((imageUrl, index) => (
               <SwiperSlide key={index}>
                 <img
-                  loading="lazy"
                   src={imageUrl}
                   onLoad={handleImageLoad}
                   className="animate-in slide-in-from-bottom-48"
