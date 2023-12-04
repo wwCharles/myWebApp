@@ -188,8 +188,8 @@ export default function Profile() {
                 </p>
               )}
               <ul className="flex flex-col flex-1 gap-10 mt-5 w-full">
-                {items.map((item) => (
-                  <li className="flex justify-center w-full" key={item._id}>
+                {items.map((item, index) => (
+                  <li className="flex justify-center w-full" key={index}>
                     <PostItem card={item} />
                   </li>
                 ))}

@@ -105,7 +105,7 @@ export default function Post() {
                 {currentPost?.location && (
                   <>
                     <p>
-                      <sub>・{card.location}</sub>
+                      <sub>・{currentPost.location}</sub>
                     </p>
                   </>
                 )}
