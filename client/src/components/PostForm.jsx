@@ -65,9 +65,9 @@ export default function PostForm() {
         const promises = [];
 
         const options = {
-          maxSizeMB: 1,
+          maxSizeMB: 2,
           // maxWidthOrHeight: 1920,
-          maxWidthOrHeight: 1080,
+          maxWidthOrHeight: 1280,
         };
 
         for (let i = 0; i < images.length; i++) {
