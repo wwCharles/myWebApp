@@ -10,7 +10,8 @@ import { app } from "../firebase";
 import { useEffect, useState } from "react";
 
 export default function OAuth() {
-  const { loading } = useSelector((state) => state.user);
+  const { currentUser, loading } = useSelector((state) => state.user);
+
   const [randomNumber] = useState(Math.floor(Math.random() * 10) + 1);
   const [sectionLoaded, setSectionLoaded] = useState(false);
   //
@@ -35,6 +36,7 @@ export default function OAuth() {
         }),
       });
       const data = await res.json();
+      // console.log(data);
 
       if (typeof data === "object" && data != null) {
         dispatch(signInSuccess(data));
@@ -67,7 +69,15 @@ export default function OAuth() {
                 loading ? "text-blue-500" : "text-red"
               }`}
             >
-              {loading ? "juiced23" : "enter"}
+              {loading ? (
+                <>
+                  juiced23 <br /> <sub>click to enter</sub>
+                </>
+              ) : (
+                <>
+                  google <br /> <sub>click to signin</sub>
+                </>
+              )}
             </h1>
           </button>
         </div>

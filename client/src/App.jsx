@@ -16,6 +16,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
+            path="/"
+            element={
+              <Suspense>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
             path="/oauth"
             element={
               <Suspense>
@@ -31,14 +39,6 @@ function App() {
               </Suspense>
             }
           >
-            <Route
-              path="/"
-              element={
-                <Suspense>
-                  <Home />
-                </Suspense>
-              }
-            />
             <Route
               path="/profile/:id"
               element={

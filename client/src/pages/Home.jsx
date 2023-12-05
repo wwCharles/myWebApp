@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useGetAllPost } from "../api-calls/PostApi";
 import { useSelector } from "react-redux";
 import PostItem from "../components/PostItem";
+import LeftSidebar from "../components/LeftSidebar";
+import Topbar from "../components/Topbar";
 
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -10,16 +12,20 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [lazy, setLazy] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState("up");
 
   const getAllPost = useGetAllPost();
 
   const newUser = () => {
-    const createdAt = Date.parse(currentUser.createdAt);
-    const dateToday = Date.now();
-    if (dateToday - createdAt <= 10000) {
-      alert(
-        "Juiced23 a hub to showcase builds and share stories.\nCommunity-driven flag any inappropriate post.\nReach out for functionality requests, bugs, or to join our team info@juiced23.com.\nYour data? We don't care.\nAds keep us rolling—be cool."
-      );
+    if (currentUser) {
+      const createdAt = Date.parse(currentUser.createdAt);
+      const dateToday = Date.now();
+      if (dateToday - createdAt <= 10000) {
+        alert(
+          "Juiced23 a hub to showcase builds and share stories.\nCommunity-driven flag any inappropriate post.\nReach out for functionality requests, bugs, or to join our team info@juiced23.com.\nYour data? We don't care.\nAds keep us rolling—be cool."
+        );
+      }
     }
   };
 
@@ -52,6 +58,11 @@ const Home = () => {
 
   const handleScroll = () => {
     const scrollContainer = document.querySelector(".home-container");
+    const currentScrollY = scrollContainer.scrollTop;
+
+    setScrollDirection(currentScrollY > scrollY ? "down" : "up");
+    setScrollY(currentScrollY);
+
     const scrollTriggerPosition =
       scrollContainer.offsetHeight / 2 + scrollContainer.offsetTop;
 
@@ -72,7 +83,7 @@ const Home = () => {
     return () => {
       scrollContainer.removeEventListener("scroll", handleScroll);
     };
-  }, [isLoading]);
+  }, [isLoading, scrollY]);
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -87,27 +98,34 @@ const Home = () => {
       setLazy(true);
     }, 800);
 
-    return () => clearInterval(intervalId);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [isLoading]);
 
   return (
-    <div className="flex flex-1 ">
-      <div className="home-container">
-        <div className="home-posts">
-          <div>
-            <ul
-              className={`flex flex-col flex-1 gap-10 w-full opacity-0 transition-opacity duration-1000 ${
-                lazy && "opacity-100"
-              } `}
-            >
-              {items.map((item, index) => (
-                <li className="flex justify-center w-full" key={index}>
-                  <PostItem card={item} />
-                </li>
-              ))}
-            </ul>
-            {isLoading && <p>loading...</p>}
-            {error && <p>error, reload. </p>}
+    <div className="w-full md:flex">
+      <LeftSidebar />
+      {scrollDirection === "up" && <Topbar />}
+
+      <div className="flex flex-1 h-full">
+        <div className="home-container">
+          <div className="home-posts">
+            <div>
+              <ul
+                className={`flex flex-col flex-1 gap-10 w-full opacity-0 transition-opacity duration-1000 ${
+                  lazy && "opacity-100"
+                } `}
+              >
+                {items.map((item, index) => (
+                  <li className="flex justify-center w-full" key={index}>
+                    <PostItem card={item} />
+                  </li>
+                ))}
+              </ul>
+              {isLoading && <p>loading...</p>}
+              {error && <p>error, reload. </p>}
+            </div>
           </div>
         </div>
       </div>

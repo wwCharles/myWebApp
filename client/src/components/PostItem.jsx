@@ -82,14 +82,16 @@ export default function PostItem({ card }) {
   };
 
   useEffect(() => {
-    if (card.likes.includes(currentUser._id)) {
-      setLikedStat(true);
-    }
-    if (card.redflag.includes(currentUser._id)) {
-      setFlagStat(true);
-    }
-    if (card.likes.length >= 100) {
-      setPolePosition(true);
+    if (currentUser) {
+      if (card.likes.includes(currentUser._id)) {
+        setLikedStat(true);
+      }
+      if (card.redflag.includes(currentUser._id)) {
+        setFlagStat(true);
+      }
+      if (card.likes.length >= 100) {
+        setPolePosition(true);
+      }
     }
   }, [card.likes, card.redflag]);
 
@@ -113,7 +115,7 @@ export default function PostItem({ card }) {
               </SwiperSlide>
             ))}
           </Swiper>
-          {allImagesLoaded && (
+          {allImagesLoaded && currentUser ? (
             <>
               <div className="flex gap-12 items-center justify-start">
                 <button
@@ -160,6 +162,13 @@ export default function PostItem({ card }) {
               </div>
               <hr className="border-dark-4" />
             </>
+          ) : (
+            <Link
+              to="/oauth"
+              className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4 text-light-4 animate-pulse duration-10000 "
+            >
+              click to view
+            </Link>
           )}
         </div>
       </div>

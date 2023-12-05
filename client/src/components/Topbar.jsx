@@ -22,34 +22,44 @@ export default function Topbar() {
             juiced23
           </h1>
         </Link>
-
-        <Link to={`/friends/${currentUser._id}`}>
-          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-blue-500">
-            friends
-          </h1>
-        </Link>
-
-        <Link to={`/create-post`}>
-          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-blue-500 ">
-            create
-          </h1>
-        </Link>
-
-        <Link to={`/profile/${currentUser._id}`} className="flex-center gap-3">
-          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-red">
-            {currentUser.username}
-          </h1>
-        </Link>
-
-        <button
-          variant="ghost"
-          className="shad-button_ghost"
-          onClick={handleLogout}
-        >
-          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:bg-red">
-            burnout
-          </h1>
-        </button>
+        {!currentUser && (
+          <Link to="/oauth">
+            <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:text-blue-500 ">
+              login
+            </h1>
+          </Link>
+        )}
+        {currentUser && (
+          <>
+            <Link to={`/friends/${currentUser._id}`}>
+              <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-blue-500">
+                friends
+              </h1>
+            </Link>
+            <Link to={`/create-post`}>
+              <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-blue-500 ">
+                create
+              </h1>
+            </Link>
+            <Link
+              to={`/profile/${currentUser._id}`}
+              className="flex-center gap-3"
+            >
+              <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-red">
+                {currentUser.username}
+              </h1>
+            </Link>
+            <button
+              variant="ghost"
+              className="shad-button_ghost"
+              onClick={handleLogout}
+            >
+              <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:bg-red">
+                logout
+              </h1>
+            </button>
+          </>
+        )}
       </div>
     </section>
   );
