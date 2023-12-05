@@ -84,7 +84,7 @@ export default function Post() {
             <>
               <Link
                 to={`/profile/${creator._id}`}
-                className="flex text-lg md:text-xl h3-bold md:h2-bold"
+                className="flex text-lg md:text-xl h3-bold md:h2-bold animate-pulse duration-10000 "
               >
                 {creator.username}
               </Link>

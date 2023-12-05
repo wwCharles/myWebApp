@@ -27,7 +27,7 @@ export default function Friends() {
 
   useEffect(() => {
     showFriends();
-  }, [id]);
+  }, [id, currentUser]);
 
   return (
     <div className="flex flex-1 ">

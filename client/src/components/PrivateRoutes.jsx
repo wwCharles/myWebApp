@@ -6,6 +6,8 @@ import LeftSidebar from "./LeftSidebar";
 export default function PrivateRoute() {
   const { currentUser } = useSelector((state) => state.user);
 
+  const facebook = {};
+
   if (currentUser) {
     return (
       <div className="w-full md:flex ">

@@ -67,7 +67,7 @@ export default function OAuth() {
                 loading ? "text-blue-500" : "text-red"
               }`}
             >
-              {loading ? "Juiced23" : "Google"}
+              {loading ? "juiced23" : "enter"}
             </h1>
           </button>
         </div>

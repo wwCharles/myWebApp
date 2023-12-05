@@ -139,7 +139,7 @@ export default function PostItem({ card }) {
                 </button>
                 <Link
                   to={`/post/${card._id}`}
-                  className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4 text-light-4"
+                  className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4 text-light-4 animate-pulse duration-10000 "
                 >
                   creator
                 </Link>

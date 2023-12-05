@@ -123,7 +123,7 @@ export default function Profile() {
   useEffect(() => {
     showProfile();
     getData();
-  }, [id]);
+  }, [id, currentUser]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
