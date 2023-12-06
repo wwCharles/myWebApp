@@ -63,16 +63,6 @@ export default function Profile() {
     }
   };
 
-  // const handleDeleteUser = async () => {
-  //   try {
-  //     const deleteUser = await deleteAccount(id);
-  //     if (deleteUser === true) {
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const handleFriend = async () => {
     try {
       const value = await getFriendStat(currentProfile._id);
@@ -92,7 +82,7 @@ export default function Profile() {
     setError(null);
     try {
       const startIndex = items.length;
-      const batchSize = 8;
+      const batchSize = 10;
       const allUserPost = await getAllUserPost({
         startIndex,
         limit: batchSize,
@@ -103,23 +93,39 @@ export default function Profile() {
         return;
       }
 
-      // const sortedPosts = allUserPost.sort((a, b) => {
-      //   const dateA = new Date(a.createdAt);
-      //   const dateB = new Date(b.createdAt);
-
-      //   return dateB - dateA;
-      // });
-
-      // setItems(sortedPosts);
-      setItems((prevItems) => [...new Set([...prevItems, ...allUserPost])]);
+      setItems((prevItems) => {
+        const uniqueIds = new Set(prevItems.map((item) => item._id));
+        const newItems = allUserPost.filter((post) => !uniqueIds.has(post._id));
+        return [...prevItems, ...newItems];
+      });
     } catch (error) {
+      // console.error(error);
       setError(error);
     } finally {
       setIsLoading(false);
     }
   };
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setItems([]); // Reset items
+  //       setHide(true);
+
+  //       await getData();
+  //       await showProfile();
+  //     } catch (error) {
+  //       // Handle errors if necessary
+  //       // console.error(error);
+  //     } finally {
+  //       setHide(false);
+  //     }
+  //   };
+  //   fetchData(); // Call the async function
+  // }, []);
+
   useEffect(() => {
+    // Logic to execute on mount
     const fetchData = async () => {
       try {
         setItems([]); // Reset items
@@ -134,39 +140,27 @@ export default function Profile() {
         setHide(false);
       }
     };
+    fetchData();
 
-    fetchData(); // Call the async function
-  }, [id, currentUser]);
-
-  function debounce(func, delay) {
-    let timeoutId;
-    return function (...args) {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        func(...args);
-      }, delay);
+    // Cleanup function
+    return () => {
+      // Logic to execute before unmount or when [id, currentUser] changes
+      window.location.reload();
+      second();
     };
-  }
-
-  const debouncedGetData = debounce(getData, 700);
+  }, [id, currentUser]);
 
   const handleScroll = () => {
     const scrollContainer = document.querySelector(".home-container");
-    // const currentScrollY = scrollContainer.scrollTop;
-
-    // setScrollDirection(currentScrollY > scrollY ? "down" : "up");
-    // setScrollY(currentScrollY);
-
     const scrollTriggerPosition =
-      scrollContainer.offsetHeight / 2 + scrollContainer.offsetTop;
+      scrollContainer.scrollHeight - scrollContainer.clientHeight;
 
     if (
-      scrollContainer.scrollTop + scrollContainer.clientHeight >=
-        scrollTriggerPosition &&
+      scrollContainer.scrollTop >= scrollTriggerPosition &&
       !isLoading &&
       hasMoreData
     ) {
-      debouncedGetData();
+      getData();
     }
   };
 
@@ -177,12 +171,7 @@ export default function Profile() {
     return () => {
       scrollContainer.removeEventListener("scroll", handleScroll);
     };
-  }, [isLoading]);
-
-  // useEffect(() => {
-  //   showProfile();
-  //   getData();
-  // }, [id, currentUser]);
+  }, [isLoading]); // Remove isLoading from the dependency array if it's not needed
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -218,12 +207,6 @@ export default function Profile() {
                   >
                     Update
                   </button>
-                  {/* <button
-                    className="flex h3-bold md:h2-bold text-dark-4  hover:text-red"
-                    onClick={handleDeleteUser}
-                  >
-                    Delete Account
-                  </button> */}
                 </div>
               ) : (
                 <>
@@ -257,6 +240,7 @@ export default function Profile() {
           )}
 
           <div>
+            {!hasMoreData && <p>end</p>}
             {isLoading && <p>loading...</p>}
             {error && <p>error, reload. </p>}
           </div>

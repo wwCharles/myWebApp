@@ -4,19 +4,19 @@ import { useSelector } from "react-redux";
 import PostItem from "../components/PostItem";
 import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
-import { useLocation } from "react-router-dom";
 
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [items, setItems] = useState([]);
   const [hasMoreData, setHasMoreData] = useState(true);
+  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [lazy, setLazy] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [scrollDirection, setScrollDirection] = useState("up");
 
-  const location = useLocation();
+  const batchSize = 10;
   const getAllPost = useGetAllPost();
 
   const newUser = () => {
@@ -31,6 +31,8 @@ const Home = () => {
     }
   };
 
+  newUser();
+
   const getData = async () => {
     if (!hasMoreData) {
       return;
@@ -41,7 +43,6 @@ const Home = () => {
 
     try {
       const startIndex = items.length;
-      const batchSize = 15;
 
       const allPost = await getAllPost({ startIndex, limit: batchSize });
 
@@ -62,26 +63,23 @@ const Home = () => {
     }
   };
 
-  const debouncedGetData = debounce(getData, 700);
-
   const handleScroll = () => {
     const scrollContainer = document.querySelector(".home-container");
+    const scrollTriggerPosition =
+      scrollContainer.scrollHeight - scrollContainer.clientHeight;
+
+    if (
+      scrollContainer.scrollTop >= scrollTriggerPosition &&
+      !isLoading &&
+      hasMoreData
+    ) {
+      getData();
+    }
+
     const currentScrollY = scrollContainer.scrollTop;
 
     setScrollDirection(currentScrollY > scrollY ? "down" : "up");
     setScrollY(currentScrollY);
-
-    const scrollTriggerPosition =
-      scrollContainer.offsetHeight / 2 + scrollContainer.offsetTop;
-
-    if (
-      scrollContainer.scrollTop + scrollContainer.clientHeight >=
-        scrollTriggerPosition &&
-      !isLoading &&
-      hasMoreData
-    ) {
-      debouncedGetData();
-    }
   };
 
   useEffect(() => {

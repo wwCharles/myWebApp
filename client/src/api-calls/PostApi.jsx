@@ -59,7 +59,6 @@ export function useGetAllPost() {
 
 export function useGetAllUserPost() {
   const getAllUserPost = async ({ startIndex = 0, limit, id }) => {
-    // console.log(limit, id);
     try {
       const res = await fetch(
         `/api/user/getuserpost/${id}?startIndex=${startIndex}&limit=${limit}`

@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLogoutUser } from "../api-calls/UserApi";
 
 export default function Topbar() {
   const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const logoutUser = useLogoutUser();
 
   const handleLogout = async () => {
@@ -41,14 +42,24 @@ export default function Topbar() {
                 create
               </h1>
             </Link>
-            <Link
+            <button
+              onClick={() => {
+                navigate(`/profile/${currentUser._id}`);
+              }}
+              className="flex-center gap-3"
+            >
+              <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-red">
+                {currentUser.username}
+              </h1>
+            </button>
+            {/* <Link
               to={`/profile/${currentUser._id}`}
               className="flex-center gap-3"
             >
               <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-red">
                 {currentUser.username}
               </h1>
-            </Link>
+            </Link> */}
             <button
               variant="ghost"
               className="shad-button_ghost"
