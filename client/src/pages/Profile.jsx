@@ -121,10 +121,10 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setItems([]); // Reset items
-      setHide(true);
-
       try {
+        setItems([]); // Reset items
+        setHide(true);
+
         await getData();
         await showProfile();
       } catch (error) {
