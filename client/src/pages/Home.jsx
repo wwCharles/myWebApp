@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import PostItem from "../components/PostItem";
 import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -15,6 +16,7 @@ const Home = () => {
   const [scrollY, setScrollY] = useState(0);
   const [scrollDirection, setScrollDirection] = useState("up");
 
+  const location = useLocation();
   const getAllPost = useGetAllPost();
 
   const newUser = () => {
@@ -36,9 +38,10 @@ const Home = () => {
 
     setIsLoading(true);
     setError(null);
+
     try {
       const startIndex = items.length;
-      const batchSize = 40;
+      const batchSize = 15;
 
       const allPost = await getAllPost({ startIndex, limit: batchSize });
 
@@ -46,7 +49,12 @@ const Home = () => {
         setHasMoreData(false);
         return;
       }
-      setItems((prevItems) => [...new Set([...prevItems, ...allPost])]);
+
+      setItems((prevItems) => {
+        const uniqueIds = new Set(prevItems.map((item) => item._id));
+        const newItems = allPost.filter((post) => !uniqueIds.has(post._id));
+        return [...prevItems, ...newItems];
+      });
     } catch (error) {
       setError(error);
     } finally {
@@ -87,7 +95,8 @@ const Home = () => {
 
   useEffect(() => {
     const fetchdata = async () => {
-      getData();
+      await getData();
+
       newUser();
     };
     fetchdata();

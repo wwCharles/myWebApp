@@ -145,8 +145,6 @@ export default function PostForm() {
       if (createdPost === undefined) {
         setLoading(true);
         setError("Post not created refresh page");
-
-        // navigate9`/post/${createdPost._id}`;
       }
       setLoading(false);
       navigate(`/post/${createdPost._id}`);

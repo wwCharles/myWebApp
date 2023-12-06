@@ -24,7 +24,7 @@ export const getPost = async (req, res, next) => {
 
 export const getPosts = async (req, res, next) => {
   try {
-    const limit = parseInt(req.query.limit) || 20;
+    const limit = parseInt(req.query.limit) || 10;
     const startIndex = parseInt(req.query.startIndex) || 0;
 
     const searchTerm = req.query.searchTerm || "";
@@ -36,7 +36,7 @@ export const getPosts = async (req, res, next) => {
       .limit(limit)
       .skip(startIndex);
 
-    return res.status(200).json(posts);
+    res.status(200).json(posts);
   } catch (error) {
     next(error);
   }

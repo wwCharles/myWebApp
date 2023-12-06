@@ -12,7 +12,7 @@ export default function PrivateRoute() {
         <Topbar />
         <LeftSidebar />
 
-        <section className="flex flex-1 h-full">
+        <section className="flex flex-1 h-full ">
           <Outlet />
         </section>
       </div>

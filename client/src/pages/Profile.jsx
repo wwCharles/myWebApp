@@ -21,8 +21,9 @@ export default function Profile() {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
   const [lazy, setLazy] = useState(false);
+  const [hasMoreData, setHasMoreData] = useState(true);
+  const [hide, setHide] = useState(true);
 
   const updateUser = useUpdateUser();
   const getFriendStat = useGetFriendStatus();
@@ -83,20 +84,34 @@ export default function Profile() {
   };
 
   const getData = async () => {
+    if (!hasMoreData) {
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     try {
-      const allUserPost = await getAllUserPost(id);
-
-      const sortedPosts = allUserPost.sort((a, b) => {
-        const dateA = new Date(a.createdAt);
-        const dateB = new Date(b.createdAt);
-
-        return dateB - dateA;
+      const startIndex = items.length;
+      const batchSize = 8;
+      const allUserPost = await getAllUserPost({
+        startIndex,
+        limit: batchSize,
+        id,
       });
+      if (allUserPost.length === 0) {
+        setHasMoreData(false);
+        return;
+      }
 
-      setItems(sortedPosts);
-      setPage((prevPage) => prevPage + 1);
+      // const sortedPosts = allUserPost.sort((a, b) => {
+      //   const dateA = new Date(a.createdAt);
+      //   const dateB = new Date(b.createdAt);
+
+      //   return dateB - dateA;
+      // });
+
+      // setItems(sortedPosts);
+      setItems((prevItems) => [...new Set([...prevItems, ...allUserPost])]);
     } catch (error) {
       setError(error);
     } finally {
@@ -104,26 +119,70 @@ export default function Profile() {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setItems([]); // Reset items
+      setHide(true);
+
+      try {
+        await getData();
+        await showProfile();
+      } catch (error) {
+        // Handle errors if necessary
+        // console.error(error);
+      } finally {
+        setHide(false);
+      }
+    };
+
+    fetchData(); // Call the async function
+  }, [id, currentUser]);
+
+  function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  }
+
+  const debouncedGetData = debounce(getData, 700);
+
   const handleScroll = () => {
+    const scrollContainer = document.querySelector(".home-container");
+    // const currentScrollY = scrollContainer.scrollTop;
+
+    // setScrollDirection(currentScrollY > scrollY ? "down" : "up");
+    // setScrollY(currentScrollY);
+
+    const scrollTriggerPosition =
+      scrollContainer.offsetHeight / 2 + scrollContainer.offsetTop;
+
     if (
-      window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight ||
-      isLoading
+      scrollContainer.scrollTop + scrollContainer.clientHeight >=
+        scrollTriggerPosition &&
+      !isLoading &&
+      hasMoreData
     ) {
-      return;
+      debouncedGetData();
     }
-    getData();
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const scrollContainer = document.querySelector(".home-container");
+    scrollContainer.addEventListener("scroll", handleScroll);
+
+    return () => {
+      scrollContainer.removeEventListener("scroll", handleScroll);
+    };
   }, [isLoading]);
 
-  useEffect(() => {
-    showProfile();
-    getData();
-  }, [id, currentUser]);
+  // useEffect(() => {
+  //   showProfile();
+  //   getData();
+  // }, [id, currentUser]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -137,7 +196,7 @@ export default function Profile() {
     <div className="flex flex-1 ">
       <div className="home-container ">
         <div className="home-posts">
-          {!isLoading && (
+          {!hide && (
             <div
               className={`h3-bold md:h2-bold text-left w-full opacity-0 transition-opacity duration-1000 ${
                 lazy && "opacity-100"

@@ -59,7 +59,14 @@ export const getUserPosts = async (req, res, next) => {
 
 export const getAllUserPosts = async (req, res, next) => {
   try {
-    const posts = await Post.find({ userRef: req.params.id });
+    const limit = parseInt(req.query.limit) || 5;
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const sort = req.query.sort || "createdAt";
+    const order = req.query.order || "desc";
+    const posts = await Post.find({ userRef: req.params.id })
+      .sort({ [sort]: order })
+      .limit(limit)
+      .skip(startIndex);
     res.status(200).json(posts);
   } catch (error) {
     next(error);
