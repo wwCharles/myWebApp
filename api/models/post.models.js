@@ -6,10 +6,7 @@ const postSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
-    // userRef: {
-    //   type: String,
-    //   requuired: true,
-    // },
+
     location: {
       type: String,
     },
@@ -25,9 +22,6 @@ const postSchema = new mongoose.Schema(
     redflag: {
       type: Number,
     },
-    // onepercent: {
-    //   type: Boolean,
-    // },
   },
   { timestamps: true }
 );

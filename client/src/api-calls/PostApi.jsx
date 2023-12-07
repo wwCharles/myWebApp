@@ -89,9 +89,7 @@ export function useLikePost() {
   const likePost = async (id) => {
     try {
       const res = await fetch(`/api/post/like/${id}`);
-      console.log(res);
       const data = await res.json();
-      console.log(data);
       if (data === undefined) {
         return undefined;
       }
@@ -108,9 +106,7 @@ export function useDislikePost() {
   const dislikePost = async (id) => {
     try {
       const res = await fetch(`/api/post/dislike/${id}`);
-      console.log(res);
       const data = await res.json();
-      console.log(data);
       if (data === undefined) {
         return undefined;
       }
@@ -128,7 +124,6 @@ export function useFlagPost() {
     try {
       const res = await fetch(`/api/post/flag/${id}`);
       const data = await res.json();
-      console.log(data);
       if (data === undefined) {
         return undefined;
       }

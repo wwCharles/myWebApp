@@ -4,6 +4,7 @@ import { useGetAllPost } from "../api-calls/PostApi";
 import PostItem from "../components/PostItem";
 import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
+import OnePercent from "./OnePercent";
 
 const Home = () => {
   // const { currentUser } = useSelector((state) => state.user);
@@ -15,6 +16,7 @@ const Home = () => {
   const [lazy, setLazy] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [scrollDirection, setScrollDirection] = useState("up");
+  console.log("currentPage", currentPage);
 
   const getAllPost = useGetAllPost();
 
@@ -63,7 +65,6 @@ const Home = () => {
       hasMoreData
     ) {
       getData();
-      console.log(1);
     }
 
     const currentScrollY = scrollContainer.scrollTop;
@@ -97,30 +98,25 @@ const Home = () => {
       clearInterval(intervalId);
     };
   }, [isLoading]);
-
+  // const [showOnePercent, setShowOnePercent] = useState(false);
   return (
     <div className="w-full md:flex">
       <LeftSidebar />
       {scrollDirection === "up" && <Topbar />}
 
-      <div className="flex flex-1 h-full">
+      <div className="flex flex-1 h-full ">
         <div className="home-container">
           <div className="home-posts">
-            <div>
-              <ul
-                className={`flex flex-col flex-1 gap-10 w-full opacity-0 transition-opacity duration-1000 ${
-                  lazy && "opacity-100"
-                } `}
-              >
-                {items.map((item, index) => (
-                  <li className="flex justify-center w-full" key={index}>
-                    <PostItem card={item} />
-                  </li>
-                ))}
-              </ul>
-              {isLoading && <p>...loading...</p>}
-              {error && <p>error, reload. </p>}
-            </div>
+            <ul className="flex flex-col flex-1 gap-9 w-full ">
+              {items?.map((item, index) => (
+                <li key={index} className="flex justify-center w-full">
+                  <PostItem card={item} index={index} />
+                </li>
+              ))}
+            </ul>
+
+            {isLoading && <p>...loading...</p>}
+            {error && <p>error, reload. </p>}
           </div>
         </div>
       </div>

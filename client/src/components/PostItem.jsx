@@ -15,13 +15,13 @@ import {
   useLikePost,
 } from "../api-calls/PostApi";
 
-export default function PostItem({ card }) {
+export default function PostItem({ card, index }) {
   SwiperCore.use([Navigation, Pagination]);
+  const [slideVisibility, setSlideVisibility] = useState(true);
   const [like, setLike] = useState();
   const [dislike, setDislike] = useState();
-  const [flagStat, setFlagStat] = useState(false);
+  // const [flagStat, setFlagStat] = useState(false);
   const [poleposition, setPolePosition] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState(0);
 
   const getPostbyId = useGetPostbyId();
   const likePost = useLikePost();
@@ -29,15 +29,19 @@ export default function PostItem({ card }) {
   const flagPost = useFlagPost();
   const deletePost = useDeletePost();
 
-  const handleImageLoad = () => {
-    setImagesLoaded((prev) => prev + 1);
-  };
+  function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  }
 
-  const likeStatus = async (e) => {
-    e.preventDefault();
+  const debouncedLikeStatus = debounce(async () => {
     try {
       const status = await likePost(card._id);
-      console.log(status.likes);
       if (status.success === false) {
         return;
       }
@@ -48,12 +52,11 @@ export default function PostItem({ card }) {
     } catch (error) {
       console.log(error);
     }
-  };
-  const dislikeStatus = async (e) => {
-    e.preventDefault();
+  }, 200);
+
+  const debouncedDislikeStatus = debounce(async () => {
     try {
       const status = await dislikePost(card._id);
-      console.log(status.dislikes);
       if (status.success === false) {
         return;
       }
@@ -61,8 +64,7 @@ export default function PostItem({ card }) {
     } catch (error) {
       console.log(error);
     }
-  };
-
+  }, 500);
   const flagStatus = async (e) => {
     e.preventDefault();
     try {
@@ -70,11 +72,13 @@ export default function PostItem({ card }) {
       if (status.success === false) {
         return;
       }
-      setFlagStat(status);
+      // setFlagStat(status);
 
       const postToDelete = await getPostbyId(card._id);
 
-      if (postToDelete.redflag >= 50) {
+      setSlideVisibility((prev) => !prev);
+
+      if (postToDelete.redflag >= 10) {
         try {
           const storage = getStorage(app);
           for (let i = 0; i < postToDelete.imageUrls.length; i++) {
@@ -94,9 +98,9 @@ export default function PostItem({ card }) {
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-5xl ">
-      <div className="flex flex-center flex-col gap-10 ">
-        <div className="file_uploader-img a:w-[280px] b:w-[370px] c:w-[400px] w:[20px] sm:w-[640px] md:w-[680px] lg:w-[680px] xl:w-[1024px]">
+    <div className="post-card">
+      {slideVisibility && (
+        <>
           <Swiper
             autoHeight={true}
             pagination={{ clickable: true }}
@@ -107,83 +111,76 @@ export default function PostItem({ card }) {
               <SwiperSlide key={index}>
                 <img
                   src={imageUrl}
-                  onLoad={handleImageLoad}
+                  // onLoad={handleImageLoad}
                   className="animate-in slide-in-from-bottom-48"
                 />
               </SwiperSlide>
             ))}
           </Swiper>
-
-          <>
-            <div className="flex gap-12 items-center justify-start">
-              <button
-                onClick={likeStatus}
-                className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
-              >
-                {like ? (
-                  <>
-                    🤍
-                    <sub>
-                      <small>{like.likes}</small>
-                    </sub>
-                  </>
-                ) : (
-                  <>
-                    🤍
-                    <sub>
-                      <small>{card.likes}</small>
-                    </sub>
-                  </>
-                )}
-              </button>
-              <button
-                onClick={dislikeStatus}
-                className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
-              >
-                {dislike ? (
-                  <>
-                    ♡
-                    <sub>
-                      <small>{dislike.dislikes}</small>
-                    </sub>
-                  </>
-                ) : (
-                  <>
-                    ♡
-                    <sub>
-                      <small>{card.dislike}</small>
-                    </sub>
-                  </>
-                )}
-              </button>
-              <button
-                onClick={flagStatus}
-                className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
-              >
-                {flagStat ? "🚩" : "🏳️"}
-              </button>
-
-              {poleposition && (
-                <p className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4 text-purple-500">
-                  1%
-                </p>
-              )}
-            </div>
-
-            <div className="md:text-xl h3-bold md:h2-bold mt-2 ">
-              {card.location ? (
-                <p>
-                  <sub>・{card.location}</sub>
-                </p>
+          <div className="flex gap-12 items-center justify-start">
+            <button
+              onClick={debouncedLikeStatus}
+              className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
+            >
+              {like ? (
+                <>
+                  🤍
+                  <sub>
+                    <small>{like.likes}</small>
+                  </sub>
+                </>
               ) : (
-                ""
+                <>
+                  🤍
+                  <sub>
+                    <small>{card.likes}</small>
+                  </sub>
+                </>
               )}
-              {card.caption && <p>"{card.caption}"</p>}
-            </div>
-            <hr className="border-dark-4" />
-          </>
-        </div>
-      </div>
+            </button>
+            <button
+              onClick={debouncedDislikeStatus}
+              className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
+            >
+              {dislike ? (
+                <>
+                  ♡
+                  <sub>
+                    <small>{dislike.dislikes}</small>
+                  </sub>
+                </>
+              ) : (
+                <>
+                  ♡
+                  <sub>
+                    <small>{card.dislikes}</small>
+                  </sub>
+                </>
+              )}
+            </button>
+            <button
+              onClick={flagStatus}
+              className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
+            >
+              🚩
+              <sub>
+                <small>{card.redflag}</small>
+              </sub>
+            </button>
+
+            {poleposition && (
+              <p className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4 text-purple-500">
+                1%
+              </p>
+            )}
+          </div>
+          <div className="md:text-xl h3-bold md:h2-bold mt-2">
+            {card.location && <sub>⌂__{card.location}</sub>}
+            {card.caption && <p>"{card.caption}"</p>}
+          </div>
+          <hr />
+        </>
+      )}
     </div>
   );
 }

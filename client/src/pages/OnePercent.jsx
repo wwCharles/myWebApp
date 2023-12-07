@@ -121,8 +121,8 @@ const OnePercent = () => {
                   </li>
                 ))}
               </ul>
-              {items.length === 0 && <p>no 1%</p>}
-              {isLoading && <p>...loading...</p>}
+              {items.length === 0 && <p>no post has mede the cut</p>}
+              {/* {isLoading && <p>...loading...</p>} */}
               {error && <p>error, reload. </p>}
             </div>
           </div>
