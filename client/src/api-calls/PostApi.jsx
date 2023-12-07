@@ -1,5 +1,5 @@
 export function useCreatePost() {
-  const createPost = async (formData, id) => {
+  const createPost = async (formData) => {
     try {
       const res = await fetch("/api/post/create", {
         method: "POST",
@@ -8,7 +8,6 @@ export function useCreatePost() {
         },
         body: JSON.stringify({
           ...formData,
-          userRef: id,
         }),
       });
       const data = await res.json();
@@ -43,7 +42,7 @@ export function useGetPostbyId() {
 }
 
 export function useGetAllPost() {
-  const getAllPost = async ({ startIndex = 0, limit }) => {
+  const getAllPost = async ({ startIndex, limit }) => {
     try {
       const res = await fetch(
         `/api/post/get?startIndex=${startIndex}&limit=${limit}`
@@ -55,6 +54,20 @@ export function useGetAllPost() {
     }
   };
   return getAllPost;
+}
+export function useGetOnePercent() {
+  const OnePercent = async ({ startIndex, limit }) => {
+    try {
+      const res = await fetch(
+        `/api/post/getOnePercent?startIndex=${startIndex}&limit=${limit}`
+      );
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return OnePercent;
 }
 
 export function useGetAllUserPost() {
@@ -76,7 +89,9 @@ export function useLikePost() {
   const likePost = async (id) => {
     try {
       const res = await fetch(`/api/post/like/${id}`);
+      console.log(res);
       const data = await res.json();
+      console.log(data);
       if (data === undefined) {
         return undefined;
       }
@@ -88,11 +103,32 @@ export function useLikePost() {
   };
   return likePost;
 }
+
+export function useDislikePost() {
+  const dislikePost = async (id) => {
+    try {
+      const res = await fetch(`/api/post/dislike/${id}`);
+      console.log(res);
+      const data = await res.json();
+      console.log(data);
+      if (data === undefined) {
+        return undefined;
+      }
+      return data;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
+  };
+  return dislikePost;
+}
+
 export function useFlagPost() {
   const flagPost = async (id) => {
     try {
       const res = await fetch(`/api/post/flag/${id}`);
       const data = await res.json();
+      console.log(data);
       if (data === undefined) {
         return undefined;
       }

@@ -1,19 +1,19 @@
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useLogoutUser } from "../api-calls/UserApi";
+// import { useLogoutUser } from "../api-calls/UserApi";
 
 export default function LeftSidebar() {
-  const { currentUser } = useSelector((state) => state.user);
-  const logoutUser = useLogoutUser();
+  // const { currentUser } = useSelector((state) => state.user);
+  // const logoutUser = useLogoutUser();
 
-  const handleLogout = async () => {
-    try {
-      await logoutUser();
-      na;
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     await logoutUser();
+  //     na;
+  //   } catch (error) {
+  //     console.error("Logout failed:", error);
+  //   }
+  // };
 
   return (
     <nav className="leftsidebar">
@@ -23,14 +23,20 @@ export default function LeftSidebar() {
             juiced23
           </h1>
         </Link>
-        {!currentUser && (
-          <Link to="/oauth">
-            <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:text-blue-500 ">
-              login
-            </h1>
-          </Link>
-        )}
-        {currentUser && (
+
+        <Link to={`/create-post`}>
+          <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:text-blue-500 ">
+            create
+          </h1>
+        </Link>
+
+        <Link to={`/one`}>
+          <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:text-blue-500 ">
+            1%
+          </h1>
+        </Link>
+
+        {/* {currentUser && (
           <>
             <Link to={`/friends/${currentUser._id}`}>
               <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 hover:text-blue-500 ">
@@ -48,9 +54,9 @@ export default function LeftSidebar() {
               </h1>
             </Link>
           </>
-        )}
+        )} */}
       </div>
-      {currentUser && (
+      {/* {currentUser && (
         <div>
           <button
             variant="ghost"
@@ -62,7 +68,7 @@ export default function LeftSidebar() {
             </h1>
           </button>
         </div>
-      )}
+      )} */}
     </nav>
   );
 }

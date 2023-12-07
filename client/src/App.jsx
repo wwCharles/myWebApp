@@ -1,14 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
+// import OnePercent from "./pages/OnePercent";
 
 // Lazy-loaded components
-const OAuth = lazy(() => import("./pages/OAuth"));
-const PrivateRoute = lazy(() => import("./components/PrivateRoutes"));
+// const OAuth = lazy(() => import("./pages/OAuth"));
+// const PrivateRoute = lazy(() => import("./components/PrivateRoutes"));
 const Home = lazy(() => import("./pages/Home"));
-const Profile = lazy(() => import("./pages/Profile"));
+// const Profile = lazy(() => import("./pages/Profile"));
 const CreatePost = lazy(() => import("./pages/CreatePost"));
-const PostPage = lazy(() => import("./pages/PostPage"));
-const Friends = lazy(() => import("./pages/Friends"));
+const OnePercent = lazy(() => import("./pages/OnePercent"));
+// const PostPage = lazy(() => import("./pages/PostPage"));
+// const Friends = lazy(() => import("./pages/Friends"));
 
 function App() {
   return (
@@ -23,55 +25,63 @@ function App() {
               </Suspense>
             }
           />
-          <Route
+          {/* <Route
             path="/oauth"
             element={
               <Suspense>
                 <OAuth />
               </Suspense>
             }
-          />
+          /> */}
 
-          <Route
+          {/* <Route
             element={
               <Suspense>
                 <PrivateRoute />
               </Suspense>
             }
-          >
-            <Route
+          > */}
+          {/* <Route
               path="/profile/:id"
               element={
                 <Suspense>
                   <Profile />
                 </Suspense>
               }
-            />
-            <Route
-              path="/create-post"
-              element={
-                <Suspense>
-                  <CreatePost />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/post/:id"
-              element={
-                <Suspense>
-                  <PostPage />
-                </Suspense>
-              }
-            />
-            <Route
+            /> */}
+          <Route
+            path="/create-post"
+            element={
+              <Suspense>
+                <CreatePost />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/one"
+            element={
+              <Suspense>
+                <OnePercent />
+              </Suspense>
+            }
+          />
+          {/* <Route
+            path="/post/:id"
+            element={
+              <Suspense>
+                <PostPage />
+              </Suspense>
+            }
+          /> */}
+          {/* <Route
               path="/friends/:id"
               element={
                 <Suspense>
                   <Friends />
                 </Suspense>
               }
-            />
-          </Route>
+            /> */}
+          {/* </Route> */}
         </Routes>
       </BrowserRouter>
     </main>

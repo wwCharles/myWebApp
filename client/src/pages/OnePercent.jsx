@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useGetAllPost } from "../api-calls/PostApi";
+import { useGetOnePercent } from "../api-calls/PostApi";
 // import { useSelector } from "react-redux";
 import PostItem from "../components/PostItem";
 import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
 
-const Home = () => {
+const OnePercent = () => {
   // const { currentUser } = useSelector((state) => state.user);
   const [items, setItems] = useState([]);
   const [hasMoreData, setHasMoreData] = useState(true);
@@ -16,7 +16,7 @@ const Home = () => {
   const [scrollY, setScrollY] = useState(0);
   const [scrollDirection, setScrollDirection] = useState("up");
 
-  const getAllPost = useGetAllPost();
+  const OnePercent = useGetOnePercent();
 
   const getData = async () => {
     if (!hasMoreData || isLoading) {
@@ -30,8 +30,7 @@ const Home = () => {
       const batchSize = 10;
       const startIndex = (currentPage - 1) * batchSize;
 
-      const allPost = await getAllPost({ startIndex, limit: batchSize });
-      // console.log(allPost);
+      const allPost = await OnePercent({ startIndex, limit: batchSize });
 
       if (allPost === null) {
         setHasMoreData(false);
@@ -41,6 +40,10 @@ const Home = () => {
       setItems((prevItems) => {
         const uniqueIds = new Set(prevItems.map((item) => item._id));
         const newItems = allPost.filter((post) => !uniqueIds.has(post._id));
+        if (newItems.length === 0) {
+          console.log(true);
+          return;
+        }
         return [...prevItems, ...newItems];
       });
 
@@ -53,7 +56,7 @@ const Home = () => {
   };
 
   const handleScroll = () => {
-    const scrollContainer = document.querySelector(".home-container");
+    const scrollContainer = document.querySelector(".home-posts");
     const scrollTriggerPosition =
       scrollContainer.scrollHeight - scrollContainer.clientHeight;
 
@@ -73,7 +76,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const scrollContainer = document.querySelector(".home-container");
+    const scrollContainer = document.querySelector(".home-posts");
     scrollContainer.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -118,6 +121,7 @@ const Home = () => {
                   </li>
                 ))}
               </ul>
+              {items.length === 0 && <p>no 1%</p>}
               {isLoading && <p>...loading...</p>}
               {error && <p>error, reload. </p>}
             </div>
@@ -128,7 +132,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default OnePercent;
 
 function debounce(func, delay) {
   let timeoutId;

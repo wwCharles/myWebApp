@@ -36,6 +36,36 @@ export const getPosts = async (req, res, next) => {
       .limit(limit)
       .skip(startIndex);
 
+    if (posts.length === 0) {
+      res.status(200).json(null);
+      return;
+    }
+
+    res.status(200).json(posts);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getOnePercent = async (req, res, next) => {
+  try {
+    const limit = parseInt(req.query.limit) || 10;
+    const startIndex = parseInt(req.query.startIndex) || 0;
+
+    const searchTerm = req.query.searchTerm || "";
+    const sort = req.query.sort || "createdAt";
+    const order = req.query.order || "desc";
+
+    const posts = await Post.find({ likes: { $gt: 100 } }) // Filter by likes greater than 100
+      .sort({ [sort]: order })
+      .limit(limit)
+      .skip(startIndex);
+
+    if (posts.length === 0) {
+      res.status(200).json(null);
+      return;
+    }
+
     res.status(200).json(posts);
   } catch (error) {
     next(error);
@@ -45,43 +75,95 @@ export const getPosts = async (req, res, next) => {
 export const likePost = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id);
-    const user = await req.user.id;
 
     if (!post) {
       return next(errorHandler(404, "post not found!"));
     }
 
-    if (post.likes.includes(user)) {
-      await Post.updateOne(post, { $pull: { likes: user } });
+    // Increment the likes counter
+    post.likes = (post.likes || 0) + 1;
 
-      return res.status(200).json(false);
-    } else {
-      await Post.updateOne(post, { $push: { likes: user } });
+    // Save the updated post
+    await post.save();
 
-      return res.status(200).json(true);
-    }
+    //
+    return res.status(200).json({
+      success: true,
+      // message: "Post liked successfully.",
+      likes: post.likes,
+    });
   } catch (error) {
     next(error);
   }
 };
-export const flagPost = async (req, res, next) => {
+
+export const dislikePost = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id);
-    const user = await req.user.id;
 
     if (!post) {
       return next(errorHandler(404, "post not found!"));
     }
 
-    if (post.redflag.includes(user)) {
-      await Post.updateOne(post, { $pull: { redflag: user } });
+    // Increment the likes counter
+    post.dislikes = (post.dislikes || 0) + 1;
 
-      return res.status(200).json(false);
-    } else {
-      await Post.updateOne(post, { $push: { redflag: user } });
+    // Save the updated post
+    await post.save();
 
-      return res.status(200).json(true);
+    //
+    return res.status(200).json({
+      success: true,
+      // message: "Post liked successfully.",
+      dislikes: post.dislikes,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+// export const likePost = async (req, res, next) => {
+//   try {
+//     const post = await Post.findById(req.params.id);
+//     const user = await req.user.id;
+
+//     if (!post) {
+//       return next(errorHandler(404, "post not found!"));
+//     }
+
+//     if (post.likes.includes(user)) {
+//       await Post.updateOne(post, { $pull: { likes: user } });
+
+//       return res.status(200).json(false);
+//     } else {
+//       await Post.updateOne(post, { $push: { likes: user } });
+
+//       return res.status(200).json(true);
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+export const flagPost = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return next(errorHandler(404, "post not found!"));
     }
+
+    // Increment the likes counter
+    post.redflag = (post.redflag || 0) + 1;
+
+    // Save the updated post
+    await post.save();
+
+    //
+    return res.status(200).json({
+      success: true,
+      // message: "Post liked successfully.",
+      redflag: post.redflag,
+    });
   } catch (error) {
     next(error);
   }
@@ -94,12 +176,12 @@ export const deletePost = async (req, res, next) => {
     return next(errorHandler(404, "post not found!"));
   }
 
-  if (req.user.id !== post.userRef) {
-    return next(errorHandler(401, "You can only delete your own post!"));
-  }
+  // if (req.user.id !== post.userRef) {
+  //   return next(errorHandler(401, "You can only delete your own post!"));
+  // }
 
   try {
-    await Post.findByIdAndDelete(req.params.id);
+    await Post.findByIdAndDelete(post._id);
     res.status(200).json(true);
   } catch (error) {
     next(error);

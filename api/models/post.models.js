@@ -6,10 +6,10 @@ const postSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
-    userRef: {
-      type: String,
-      requuired: true,
-    },
+    // userRef: {
+    //   type: String,
+    //   requuired: true,
+    // },
     location: {
       type: String,
     },
@@ -17,14 +17,17 @@ const postSchema = new mongoose.Schema(
       type: String,
     },
     likes: {
-      type: Array,
+      type: Number,
     },
-    onepercent: {
-      type: Boolean,
+    dislikes: {
+      type: Number,
     },
     redflag: {
-      type: Array,
+      type: Number,
     },
+    // onepercent: {
+    //   type: Boolean,
+    // },
   },
   { timestamps: true }
 );

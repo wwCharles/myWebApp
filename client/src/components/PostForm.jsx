@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 // swiper
 import SwiperCore from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
@@ -20,7 +20,7 @@ import { useCreatePost } from "../api-calls/PostApi";
 
 export default function PostForm() {
   SwiperCore.use([Navigation, Pagination]);
-  const { currentUser } = useSelector((state) => state.user);
+  // const { currentUser } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [uploading, setUpLoading] = useState(false);
   const [imageUploadError, setImageUploadError] = useState(false);
@@ -141,13 +141,14 @@ export default function PostForm() {
       }
       setLoading(true);
       setError(false);
-      const createdPost = await createPost(formData, currentUser._id);
+      const createdPost = await createPost(formData);
       if (createdPost === undefined) {
         setLoading(true);
         setError("Post not created refresh page");
       }
       setLoading(false);
-      navigate(`/post/${createdPost._id}`);
+      // navigate(`/post/${createdPost._id}`);
+      navigate(`/`);
     } catch (error) {
       setLoading(false);
       setError(error);
@@ -241,7 +242,7 @@ export default function PostForm() {
           }
           onClick={initUpload}
         >
-          {uploading ? `${prog}` : "Post"}
+          {uploading ? `${prog === null ? 0 : prog}` : "Post"}
         </button>
       </div>
     </form>
