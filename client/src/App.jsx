@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
-import OnePercent from "./pages/OnePercent";
+// import OnePercent from "./pages/OnePercent";
 
 // Lazy-loaded components
 // const OAuth = lazy(() => import("./pages/OAuth"));
@@ -8,7 +8,7 @@ import OnePercent from "./pages/OnePercent";
 const Home = lazy(() => import("./pages/Home"));
 // const Profile = lazy(() => import("./pages/Profile"));
 const CreatePost = lazy(() => import("./pages/CreatePost"));
-// const OnePercent = lazy(() => import("./pages/OnePercent"));
+const OnePercent = lazy(() => import("./pages/OnePercent"));
 // const PostPage = lazy(() => import("./pages/PostPage"));
 // const Friends = lazy(() => import("./pages/Friends"));
 
