@@ -22,55 +22,101 @@ export const getPost = async (req, res, next) => {
   }
 };
 
+// export const getPosts = async (req, res, next) => {
+//   try {
+//     const limit = parseInt(req.query.limit) || 10;
+//     const startIndex = parseInt(req.query.startIndex) || 0;
+
+//     const searchTerm = req.query.searchTerm || "";
+//     const sort = req.query.sort || "createdAt";
+//     const order = req.query.order || "desc";
+
+//     const posts = await Post.find()
+//       .sort({ [sort]: order })
+//       .limit(limit)
+//       .skip(startIndex);
+
+//     if (posts.length === 0) {
+//       res.status(200).json(null);
+//       return;
+//     }
+
+//     res.status(200).json(posts);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 export const getPosts = async (req, res, next) => {
+  const sort = req.query.sort || "createdAt";
+  const order = req.query.order || "desc";
+  const skip = req.query.skip ? Number(req.query.skip) : 0;
+  const DEFAULT_LIMIT = 10;
+
   try {
-    const limit = parseInt(req.query.limit) || 10;
-    const startIndex = parseInt(req.query.startIndex) || 0;
-
-    const searchTerm = req.query.searchTerm || "";
-    const sort = req.query.sort || "createdAt";
-    const order = req.query.order || "desc";
-
-    const posts = await Post.find()
+    const posts = await Post.find({})
       .sort({ [sort]: order })
-      .limit(limit)
-      .skip(startIndex);
+      .limit(DEFAULT_LIMIT)
+      .skip(skip);
 
-    if (posts.length === 0) {
-      res.status(200).json(null);
-      return;
-    }
-
-    res.status(200).json(posts);
+    res.status(200).json({
+      success: true,
+      data: posts,
+    });
   } catch (error) {
-    next(error);
+    // next(error);
+    res.status(400).json({
+      error: `Error getting posts: ${error.message}`,
+    });
   }
 };
 
 export const getOnePercent = async (req, res, next) => {
   try {
-    const limit = parseInt(req.query.limit) || 10;
-    const startIndex = parseInt(req.query.startIndex) || 0;
-
-    const searchTerm = req.query.searchTerm || "";
     const sort = req.query.sort || "createdAt";
     const order = req.query.order || "desc";
+    const skip = req.query.skip ? Number(req.query.skip) : 0;
+    const DEFAULT_LIMIT = 10;
 
-    const posts = await Post.find({ likes: { $gt: 100 } }) // Filter by likes greater than 100
+    const posts = await Post.find({ likes: { $gt: 10 } }) // Filter by likes greater than 100
       .sort({ [sort]: order })
-      .limit(limit)
-      .skip(startIndex);
+      .limit(DEFAULT_LIMIT)
+      .skip(skip);
 
-    if (posts.length === 0) {
-      res.status(200).json(null);
-      return;
-    }
+    res.status(200).json({
+      success: true,
+      data: posts,
+    });
 
     res.status(200).json(posts);
   } catch (error) {
     next(error);
   }
 };
+// export const getOnePercent = async (req, res, next) => {
+//   try {
+//     const limit = parseInt(req.query.limit) || 10;
+//     const startIndex = parseInt(req.query.startIndex) || 0;
+
+//     const searchTerm = req.query.searchTerm || "";
+//     const sort = req.query.sort || "createdAt";
+//     const order = req.query.order || "desc";
+
+//     const posts = await Post.find({ likes: { $gt: 100 } }) // Filter by likes greater than 100
+//       .sort({ [sort]: order })
+//       .limit(limit)
+//       .skip(startIndex);
+
+//     if (posts.length === 0) {
+//       res.status(200).json(null);
+//       return;
+//     }
+
+//     res.status(200).json(posts);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 export const likePost = async (req, res, next) => {
   try {

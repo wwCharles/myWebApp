@@ -20,7 +20,6 @@ export default function PostItem({ card, index }) {
   const [slideVisibility, setSlideVisibility] = useState(true);
   const [like, setLike] = useState();
   const [dislike, setDislike] = useState();
-  // const [flagStat, setFlagStat] = useState(false);
   const [poleposition, setPolePosition] = useState(false);
 
   const getPostbyId = useGetPostbyId();
@@ -64,7 +63,8 @@ export default function PostItem({ card, index }) {
     } catch (error) {
       console.log(error);
     }
-  }, 500);
+  }, 200);
+
   const flagStatus = async (e) => {
     e.preventDefault();
     try {
@@ -72,7 +72,6 @@ export default function PostItem({ card, index }) {
       if (status.success === false) {
         return;
       }
-      // setFlagStat(status);
 
       const postToDelete = await getPostbyId(card._id);
 
@@ -97,90 +96,117 @@ export default function PostItem({ card, index }) {
     }
   };
 
-  return (
-    <div className="post-card">
-      {slideVisibility && (
-        <>
-          <Swiper
-            autoHeight={true}
-            pagination={{ clickable: true }}
-            spaceBetween={10}
-            slidesPerView={1}
-          >
-            {card.imageUrls.map((imageUrl, index) => (
-              <SwiperSlide key={index}>
-                <img
-                  src={imageUrl}
-                  // onLoad={handleImageLoad}
-                  className="animate-in slide-in-from-bottom-48"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className="flex gap-12 items-center justify-start">
-            <button
-              onClick={debouncedLikeStatus}
-              className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
-            >
-              {like ? (
-                <>
-                  🤍
-                  <sub>
-                    <small>{like.likes}</small>
-                  </sub>
-                </>
-              ) : (
-                <>
-                  🤍
-                  <sub>
-                    <small>{card.likes}</small>
-                  </sub>
-                </>
-              )}
-            </button>
-            <button
-              onClick={debouncedDislikeStatus}
-              className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
-            >
-              {dislike ? (
-                <>
-                  ♡
-                  <sub>
-                    <small>{dislike.dislikes}</small>
-                  </sub>
-                </>
-              ) : (
-                <>
-                  ♡
-                  <sub>
-                    <small>{card.dislikes}</small>
-                  </sub>
-                </>
-              )}
-            </button>
-            <button
-              onClick={flagStatus}
-              className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
-            >
-              🚩
-              <sub>
-                <small>{card.redflag}</small>
-              </sub>
-            </button>
+  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
-            {poleposition && (
-              <p className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4 text-purple-500">
-                1%
-              </p>
+  // ...
+
+  const handleImageLoad = () => {
+    // Check if all images are loaded
+    const allImagesLoaded = card.imageUrls.every((imageUrl) => {
+      // if (imageUrl)
+      // console.log(card.length);
+      // Implement the logic to check if the image is loaded
+      // You can use a ref to track the image load status
+      // For simplicity, assuming all images are loaded here
+      return true;
+    });
+
+    // // Update the state
+    setAllImagesLoaded(allImagesLoaded);
+  };
+
+  return (
+    <div
+      className={`post-card ${
+        allImagesLoaded && slideVisibility ? "" : "hidden"
+      }`}
+      onLoad={handleImageLoad}
+    >
+      {/* <div className={`post-card ${slideVisibility ? "" : "hidden"}`}> */}
+      {/* {slideVisibility && ( */}
+      <>
+        <Swiper
+          autoHeight={true}
+          pagination={{ clickable: true }}
+          spaceBetween={10}
+          slidesPerView={1}
+        >
+          {card.imageUrls.map((imageUrl, index) => (
+            <SwiperSlide key={index}>
+              <img
+                src={imageUrl}
+                loading="eager"
+                // onLoad={handleImageLoad}
+                className="animate-in slide-in-from-top-48"
+                // className="opacity-100 transition-opacity duration-1000"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <div className="flex gap-12 items-center justify-start">
+          <button
+            onClick={debouncedLikeStatus}
+            className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
+          >
+            {like ? (
+              <>
+                🤍
+                <sub>
+                  <small>{like.likes}</small>
+                </sub>
+              </>
+            ) : (
+              <>
+                🤍
+                <sub>
+                  <small>{card.likes}</small>
+                </sub>
+              </>
             )}
-          </div>
-          <div className="md:text-xl h3-bold md:h2-bold mt-2">
-            {card.location && <sub>⌂__{card.location}</sub>}
-            {card.caption && <p>"{card.caption}"</p>}
-          </div>
-          <hr />
-        </>
-      )}
+          </button>
+          <button
+            onClick={debouncedDislikeStatus}
+            className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
+          >
+            {dislike ? (
+              <>
+                ♡
+                <sub>
+                  <small>{dislike.dislikes}</small>
+                </sub>
+              </>
+            ) : (
+              <>
+                ♡
+                <sub>
+                  <small>{card.dislikes}</small>
+                </sub>
+              </>
+            )}
+          </button>
+          <button
+            onClick={flagStatus}
+            className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
+          >
+            🚩
+            <sub>
+              <small>{card.redflag}</small>
+            </sub>
+          </button>
+
+          {poleposition && (
+            <p className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4 text-purple-500">
+              1%
+            </p>
+          )}
+        </div>
+        <div className="md:text-xl h3-bold md:h2-bold mt-2">
+          {card.location && <sub>⌂__{card.location}</sub>}
+          {card.caption && <p>"{card.caption}"</p>}
+        </div>
+        <hr className="border-gray-800" />
+      </>
+      {/* // )} */}
     </div>
   );
 }

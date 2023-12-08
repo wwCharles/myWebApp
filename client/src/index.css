@@ -20,11 +20,32 @@
   }
 
   body {
-    @apply bg-dark-1 text-white min-h-screen font-inter;
+    @apply bg-dark-1 px-2 text-white min-h-screen font-inter;
   }
 }
 
 @layer utilities {
+  /* Add this to your CSS or use Tailwind CSS classes */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .modal-content {
+    background: black;
+    padding: 20px;
+    max-width: 400px;
+    text-align: center;
+  }
+
   /* TYPOGRAPHY */
   .h1-bold {
     @apply text-[36px] font-bold leading-[140%] tracking-tighter;
@@ -149,7 +170,7 @@
 
   /* Home */
   .home-container {
-    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10  md:px-8 lg:p-14 custom-scrollbar;
+    @apply flex flex-col flex-1 items-center  gap-10 overflow-scroll py-10  md:px-8 lg:p-14 custom-scrollbar;
   }
 
   .home-posts {

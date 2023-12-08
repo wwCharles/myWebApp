@@ -5,48 +5,39 @@ import PostItem from "../components/PostItem";
 import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
 import OnePercent from "./OnePercent";
+import WelcomeModal from "../components/WelcomeModal";
 
 const Home = () => {
-  // const { currentUser } = useSelector((state) => state.user);
   const [items, setItems] = useState([]);
-  const [hasMoreData, setHasMoreData] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  // console.log(items);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [lazy, setLazy] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [scrollDirection, setScrollDirection] = useState("up");
-  console.log("currentPage", currentPage);
+  const [skip, setSkip] = useState(0);
+  const [isEnd, setIsEnd] = useState(false);
+  const [showModal, setShowModal] = useState(true);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const getAllPost = useGetAllPost();
 
   const getData = async () => {
-    if (!hasMoreData || isLoading) {
-      return;
-    }
-
     setIsLoading(true);
-    setError(null);
 
     try {
-      const batchSize = 10;
-      const startIndex = (currentPage - 1) * batchSize;
+      const { data, error } = await getAllPost(skip);
+      // console.log(data, error, skip);
 
-      const allPost = await getAllPost({ startIndex, limit: batchSize });
-      // console.log(allPost);
-
-      if (allPost === null) {
-        setHasMoreData(false);
+      if (error) {
+        return;
+      }
+      if (data?.length === 0) {
+        setIsEnd(true);
         return;
       }
 
-      setItems((prevItems) => {
-        const uniqueIds = new Set(prevItems.map((item) => item._id));
-        const newItems = allPost.filter((post) => !uniqueIds.has(post._id));
-        return [...prevItems, ...newItems];
-      });
-
-      setCurrentPage((prevPage) => prevPage + 1); // Increment the current page
+      setItems([...items, ...data]);
     } catch (error) {
       setError(error);
     } finally {
@@ -54,69 +45,53 @@ const Home = () => {
     }
   };
 
-  const handleScroll = () => {
-    const scrollContainer = document.querySelector(".home-container");
-    const scrollTriggerPosition =
-      scrollContainer.scrollHeight - scrollContainer.clientHeight;
+  const handleScroll = (e) => {
+    const { offsetHeight, scrollTop, scrollHeight } = e.target;
 
-    if (
-      scrollContainer.scrollTop >= scrollTriggerPosition &&
-      !isLoading &&
-      hasMoreData
-    ) {
-      getData();
+    if (offsetHeight + scrollTop >= scrollHeight) {
+      setSkip(items?.length);
     }
-
-    const currentScrollY = scrollContainer.scrollTop;
-
-    setScrollDirection(currentScrollY > scrollY ? "down" : "up");
-    setScrollY(currentScrollY);
   };
-
-  useEffect(() => {
-    const scrollContainer = document.querySelector(".home-container");
-    scrollContainer.addEventListener("scroll", handleScroll);
-
-    return () => {
-      scrollContainer.removeEventListener("scroll", handleScroll);
-    };
-  }, [isLoading, scrollY]);
 
   useEffect(() => {
     const fetchdata = async () => {
       await getData();
     };
     fetchdata();
-  }, []);
+  }, [skip]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setLazy(true);
-    }, 800);
+    }, 1000);
 
     return () => {
       clearInterval(intervalId);
     };
   }, [isLoading]);
-  // const [showOnePercent, setShowOnePercent] = useState(false);
+
   return (
     <div className="w-full md:flex">
       <LeftSidebar />
-      {scrollDirection === "up" && <Topbar />}
+      <Topbar />
+      {showModal && <WelcomeModal onClose={handleCloseModal} />}
 
       <div className="flex flex-1 h-full ">
-        <div className="home-container">
+        <div className="home-container" onScroll={handleScroll}>
           <div className="home-posts">
-            <ul className="flex flex-col flex-1 gap-9 w-full ">
+            <ul
+              // className="flex flex-col flex-1 gap-10 w-full"
+              className={`flex flex-col flex-1 gap-10 w-full opacity-0 transition-opacity duration-1000 ${
+                lazy && "opacity-100"
+              } `}
+            >
               {items?.map((item, index) => (
                 <li key={index} className="flex justify-center w-full">
                   <PostItem card={item} index={index} />
                 </li>
               ))}
             </ul>
-
-            {isLoading && <p>...loading...</p>}
-            {error && <p>error, reload. </p>}
+            {isEnd && <p>end</p>}
           </div>
         </div>
       </div>
@@ -126,12 +101,12 @@ const Home = () => {
 
 export default Home;
 
-function debounce(func, delay) {
-  let timeoutId;
-  return function (...args) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      func(...args);
-    }, delay);
-  };
-}
+// function debounce(func, delay) {
+//   let timeoutId;
+//   return function (...args) {
+//     clearTimeout(timeoutId);
+//     timeoutId = setTimeout(() => {
+//       func(...args);
+//     }, delay);
+//   };
+// }

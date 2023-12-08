@@ -41,12 +41,28 @@ export function useGetPostbyId() {
   return getPostbyId;
 }
 
+// export function useGetAllPost() {
+//   const getAllPost = async ({ startIndex, limit }) => {
+//     try {
+//       const res = await fetch(
+//         `/api/post/get?startIndex=${startIndex}&limit=${limit}`
+//       );
+//       const data = await res.json();
+//       console.log(data);
+//       return data;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+//   return getAllPost;
+// }
+
 export function useGetAllPost() {
-  const getAllPost = async ({ startIndex, limit }) => {
+  const getAllPost = async (skip) => {
+    console.log(skip);
     try {
-      const res = await fetch(
-        `/api/post/get?startIndex=${startIndex}&limit=${limit}`
-      );
+      const res = await fetch(`api/post/get?skip=${skip}`);
+
       const data = await res.json();
       return data;
     } catch (error) {
@@ -55,12 +71,26 @@ export function useGetAllPost() {
   };
   return getAllPost;
 }
+
+// export function useGetOnePercent() {
+//   const OnePercent = async ({ startIndex, limit }) => {
+//     try {
+//       const res = await fetch(
+//         `/api/post/getOnePercent?startIndex=${startIndex}&limit=${limit}`
+//       );
+//       const data = await res.json();
+//       return data;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+//   return OnePercent;
+// }
+
 export function useGetOnePercent() {
-  const OnePercent = async ({ startIndex, limit }) => {
+  const OnePercent = async (skip) => {
     try {
-      const res = await fetch(
-        `/api/post/getOnePercent?startIndex=${startIndex}&limit=${limit}`
-      );
+      const res = await fetch(`/api/post/getOnePercent?skip=${skip}`);
       const data = await res.json();
       return data;
     } catch (error) {
@@ -70,20 +100,20 @@ export function useGetOnePercent() {
   return OnePercent;
 }
 
-export function useGetAllUserPost() {
-  const getAllUserPost = async ({ startIndex = 0, limit, id }) => {
-    try {
-      const res = await fetch(
-        `/api/user/getuserpost/${id}?startIndex=${startIndex}&limit=${limit}`
-      );
-      const data = await res.json();
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  return getAllUserPost;
-}
+// export function useGetAllUserPost() {
+//   const getAllUserPost = async ({ startIndex = 0, limit, id }) => {
+//     try {
+//       const res = await fetch(
+//         `/api/user/getuserpost/${id}?startIndex=${startIndex}&limit=${limit}`
+//       );
+//       const data = await res.json();
+//       return data;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+//   return getAllUserPost;
+// }
 
 export function useLikePost() {
   const likePost = async (id) => {
