@@ -91,7 +91,8 @@ const Home = () => {
                 </li>
               ))}
             </ul>
-            {isEnd && <p>end</p>}
+            {isLoading && <p>...loading...</p>}
+            {/* {isEnd && <p>end</p>} */}
           </div>
         </div>
       </div>

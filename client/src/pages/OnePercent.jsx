@@ -12,7 +12,7 @@ const OnePercent = () => {
   // const [error, setError] = useState(null);
   const [lazy, setLazy] = useState(false);
   const [skip, setSkip] = useState(0);
-  const [isEnd, setIsEnd] = useState(false);
+  // const [isEnd, setIsEnd] = useState(false);
 
   const OnePercent = useGetOnePercent();
 
@@ -21,7 +21,6 @@ const OnePercent = () => {
 
     try {
       const { data, error } = await OnePercent(skip);
-      console.log(data);
 
       if (error) {
         return;
@@ -83,8 +82,8 @@ const OnePercent = () => {
                 </li>
               ))}
             </ul>
-            {items.length === 0 && <p>no post has made the cut</p>}
-            {/* {isLoading && <p>...loading...</p>} */}
+            {/* {items.length === 0 && <p>no post has made the cut</p>} */}
+            {isLoading && <p>...loading...</p>}
             {/* {error && <p>error, reload. </p>} */}
           </div>
         </div>
