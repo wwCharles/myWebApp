@@ -189,9 +189,9 @@ export default function PostItem({ card, index }) {
             className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
           >
             🚩
-            <sub>
+            {/* <sub>
               <small>{card.redflag}</small>
-            </sub>
+            </sub> */}
           </button>
 
           {poleposition && (
