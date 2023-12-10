@@ -211,7 +211,6 @@ export default function PostItem({ card, index }) {
             </div>
             <hr className="border-gray-800" />
           </>
-          <AdsComponent dataAdSlot="6097104098" />
         </div>
       )}
     </>
