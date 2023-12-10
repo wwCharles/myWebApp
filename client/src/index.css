@@ -5,8 +5,11 @@
 @tailwind utilities;
 
 @layer base {
-  -webkit-tap-highlight-color: transparent
-  
+  /* Remove the blue highlight on click for all elements */
+  *:focus {
+    outline: none;
+  }
+
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
