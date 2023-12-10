@@ -5,6 +5,8 @@
 @tailwind utilities;
 
 @layer base {
+  -webkit-tap-highlight-color: transparent
+  
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
