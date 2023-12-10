@@ -14,6 +14,11 @@ import {
   useGetPostbyId,
   useLikePost,
 } from "../api-calls/PostApi";
+//icons
+import { BsArrowUpSquare } from "react-icons/bs";
+import { BsArrowDownSquare } from "react-icons/bs";
+import { GrFlag } from "react-icons/gr";
+import AdsComponent from "./AdsComponent";
 
 export default function PostItem({ card, index }) {
   SwiperCore.use([Navigation, Pagination]);
@@ -116,97 +121,99 @@ export default function PostItem({ card, index }) {
   };
 
   return (
-    <div
-      className={`post-card ${
-        allImagesLoaded && slideVisibility ? "" : "hidden"
-      }`}
-      onLoad={handleImageLoad}
-    >
-      {/* <div className={`post-card ${slideVisibility ? "" : "hidden"}`}> */}
-      {/* {slideVisibility && ( */}
-      <>
-        <Swiper
-          autoHeight={true}
-          pagination={{ clickable: true }}
-          spaceBetween={10}
-          slidesPerView={1}
+    <>
+      {!slideVisibility ? (
+        // Render different content when slideVisibility is true
+        <div>
+          <AdsComponent dataAdSlot="6097104098" />
+        </div>
+      ) : (
+        <div
+          className={`post-card ${allImagesLoaded ? "" : "opacity-0"}`}
+          onLoad={handleImageLoad}
         >
-          {card.imageUrls.map((imageUrl, index) => (
-            <SwiperSlide key={index}>
-              <img
-                src={imageUrl}
-                loading="eager"
-                // onLoad={handleImageLoad}
-                className="animate-in slide-in-from-top-48"
-                // className="opacity-100 transition-opacity duration-1000"
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <div className="flex gap-12 items-center justify-start">
-          <button
-            onClick={debouncedLikeStatus}
-            className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
-          >
-            {like ? (
-              <>
-                🤍
-                <sub>
-                  <small>{like.likes}</small>
-                </sub>
-              </>
-            ) : (
-              <>
-                🤍
-                <sub>
-                  <small>{card.likes}</small>
-                </sub>
-              </>
-            )}
-          </button>
-          <button
-            onClick={debouncedDislikeStatus}
-            className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
-          >
-            {dislike ? (
-              <>
-                ♡
-                <sub>
-                  <small>{dislike.dislikes}</small>
-                </sub>
-              </>
-            ) : (
-              <>
-                ♡
-                <sub>
-                  <small>{card.dislikes}</small>
-                </sub>
-              </>
-            )}
-          </button>
-          <button
-            onClick={flagStatus}
-            className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
-          >
-            🚩
-            {/* <sub>
-              <small>{card.redflag}</small>
-            </sub> */}
-          </button>
+          {/* <div className={`post-card ${slideVisibility ? "" : "hidden"}`}> */}
+          {/* {slideVisibility && ( */}
+          <>
+            <Swiper
+              autoHeight={true}
+              pagination={{ clickable: true }}
+              spaceBetween={10}
+              slidesPerView={1}
+            >
+              {card.imageUrls.map((imageUrl, index) => (
+                <SwiperSlide key={index}>
+                  <img
+                    src={imageUrl}
+                    loading="eager"
+                    className="animate-in slide-in-from-bottom-48"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <div className="flex gap-12 items-center justify-start">
+              <button
+                onClick={debouncedLikeStatus}
+                className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
+              >
+                {like ? (
+                  <>
+                    <BsArrowUpSquare color="green" />
+                    <sub>
+                      <small>{like.likes}</small>
+                    </sub>
+                  </>
+                ) : (
+                  <>
+                    <BsArrowUpSquare />
+                    <sub>
+                      <small>{card.likes}</small>
+                    </sub>
+                  </>
+                )}
+              </button>
+              <button
+                onClick={debouncedDislikeStatus}
+                className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
+              >
+                {dislike ? (
+                  <>
+                    <BsArrowDownSquare color="red" />
+                    <sub>
+                      <small>{dislike.dislikes}</small>
+                    </sub>
+                  </>
+                ) : (
+                  <>
+                    <BsArrowDownSquare />
+                    <sub>
+                      <small>{card.dislikes}</small>
+                    </sub>
+                  </>
+                )}
+              </button>
+              <button
+                onClick={flagStatus}
+                className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4"
+              >
+                <GrFlag color="red" />
+              </button>
 
-          {poleposition && (
-            <p className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4 text-purple-500">
-              1%
-            </p>
-          )}
+              {poleposition && (
+                <p className="flex text-lg md:text-xl h3-bold md:h2-bold mt-4 text-purple-500">
+                  1%
+                </p>
+              )}
+            </div>
+            <div className="md:text-xl h3-bold md:h2-bold mt-2">
+              {card.location && <sub>⌂__{card.location}</sub>}
+              {card.caption && <p>"{card.caption}"</p>}
+            </div>
+            <hr className="border-gray-800" />
+          </>
+          <AdsComponent dataAdSlot="6097104098" />
         </div>
-        <div className="md:text-xl h3-bold md:h2-bold mt-2">
-          {card.location && <sub>⌂__{card.location}</sub>}
-          {card.caption && <p>"{card.caption}"</p>}
-        </div>
-        <hr className="border-gray-800" />
-      </>
-      {/* // )} */}
-    </div>
+      )}
+    </>
   );
 }

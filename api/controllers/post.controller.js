@@ -59,15 +59,12 @@ export const getPosts = async (req, res, next) => {
       .limit(DEFAULT_LIMIT)
       .skip(skip);
 
-    res.status(200).json({
-      success: true,
-      data: posts,
-    });
+    res.status(200).json(posts);
   } catch (error) {
-    // next(error);
-    res.status(400).json({
-      error: `Error getting posts: ${error.message}`,
-    });
+    next(error);
+    // res.status(400).json({
+    //   error: `Error getting posts: ${error.message}`,
+    // });
   }
 };
 
@@ -83,10 +80,7 @@ export const getOnePercent = async (req, res, next) => {
       .limit(DEFAULT_LIMIT)
       .skip(skip);
 
-    res.status(200).json({
-      success: true,
-      data: posts,
-    });
+    res.status(200).json(posts);
 
     res.status(200).json(posts);
   } catch (error) {

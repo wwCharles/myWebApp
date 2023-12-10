@@ -1,57 +1,76 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useGetAllPost } from "../api-calls/PostApi";
-// import { useSelector } from "react-redux";
 import PostItem from "../components/PostItem";
 import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
-import OnePercent from "./OnePercent";
 import WelcomeModal from "../components/WelcomeModal";
 
 const Home = () => {
   const [items, setItems] = useState([]);
-  // console.log(items);
   const [isLoading, setIsLoading] = useState(false);
-  const [lazy, setLazy] = useState(false);
-  const [skip, setSkip] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
+  const [skip, setSkip] = useState(0);
   const [showModal, setShowModal] = useState(true);
+  const [lazy, setLazy] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  // const handleCloseModal = () => {
+  //   setShowModal(false);
+  // };
 
   const getAllPost = useGetAllPost();
 
   const getData = async () => {
     setIsLoading(true);
-
     try {
-      const { data, error } = await getAllPost(skip);
-      // console.log(data, error, skip);
-
-      if (error) {
+      const data = await getAllPost(skip);
+      // console.log(data);
+      if (data.success === false) {
+        // Handle the error case
+        // console.error("Error fetching data:", error);
+        setError(true);
         return;
       }
-      if (data?.length === 0) {
+      if (!data || data.length === 0) {
+        // Handle the case where data is empty
+        // console.error("End of data:", data);
         setIsEnd(true);
         return;
       }
-
-      setItems([...items, ...data]);
+      // Update the state with the fetched data
+      setItems((prevItems) => [...prevItems, ...data]);
     } catch (error) {
-      setError(error);
+      // Handle fetch errors
+      // console.error("Error during fetch:", error);
+      setError(true);
     } finally {
+      // Ensure loading state is set to false regardless of success or failure
       setIsLoading(false);
     }
   };
 
-  const handleScroll = (e) => {
-    const { offsetHeight, scrollTop, scrollHeight } = e.target;
+  // const handleScroll = (e) => {
+  //   const { offsetHeight, scrollTop, scrollHeight } = e.target;
 
-    if (offsetHeight + scrollTop >= scrollHeight) {
-      setSkip(items?.length);
-    }
-  };
+  //   if (offsetHeight + scrollTop >= scrollHeight) {
+  //     setSkip(items?.length);
+  //   }
+  // };
+
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
+
+  const handleScroll = useCallback(
+    (e) => {
+      const { offsetHeight, scrollTop, scrollHeight } = e.target;
+
+      if (offsetHeight + scrollTop >= scrollHeight) {
+        setSkip(items?.length);
+      }
+    },
+    [items]
+  );
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -92,7 +111,8 @@ const Home = () => {
               ))}
             </ul>
             {isLoading && <p>...loading...</p>}
-            {/* {isEnd && <p>end</p>} */}
+            {error && <p>Something went wrong!</p>}
+            {!isLoading && isEnd && <p>end</p>}
           </div>
         </div>
       </div>
@@ -101,13 +121,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// function debounce(func, delay) {
-//   let timeoutId;
-//   return function (...args) {
-//     clearTimeout(timeoutId);
-//     timeoutId = setTimeout(() => {
-//       func(...args);
-//     }, delay);
-//   };
-// }
