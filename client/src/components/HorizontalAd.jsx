@@ -14,7 +14,7 @@ const HorizontalAd = (props) => {
       <p>ok</p>
       {/* <!-- square ad --> */}
       <ins
-        class="adsbygoogle"
+        className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-client="ca-pub-5969680534034624"
         data-ad-slot={dataAdSlot}
