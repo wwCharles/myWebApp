@@ -18,29 +18,54 @@ const OnePercent = () => {
 
   const getData = async () => {
     setIsLoading(true);
+
     try {
       const data = await OnePercent(skip);
-      // console.log(data);
+
       if (data.success === false) {
-        // Handle the error case
-        // console.error("Error fetching data:", error);
         setError(true);
         return;
       }
+
       if (!data || data.length === 0) {
-        // Handle the case where data is empty
-        // console.error("End of data:", data);
         setIsEnd(true);
         return;
       }
+
+      // Check the load status of each image in the data array
+      const updatedData = await Promise.all(
+        data.map(async (item) => {
+          const imageLoadPromises = item.imageUrls.map((imageUrl) => {
+            const img = new Image();
+
+            return new Promise((resolve, reject) => {
+              img.onload = () => resolve(true);
+              img.onerror = () => reject(false);
+              img.src = imageUrl;
+            });
+          });
+
+          // Wait for all promises to resolve (all images loaded) or reject (at least one image failed to load)
+          try {
+            await Promise.all(imageLoadPromises);
+            return { ...item, allImagesLoaded: true };
+          } catch (error) {
+            // Handle the case where at least one image failed to load
+            return { ...item, allImagesLoaded: false };
+          }
+        })
+      );
+
       // Update the state with the fetched data
-      setItems((prevItems) => [...prevItems, ...data]);
+      setItems((prevItems) => {
+        const uniqueItems = new Set([...prevItems, ...updatedData]);
+        return [...uniqueItems];
+      });
+
+      setAd(true);
     } catch (error) {
-      // Handle fetch errors
-      // console.error("Error during fetch:", error);
       setError(true);
     } finally {
-      // Ensure loading state is set to false regardless of success or failure
       setIsLoading(false);
     }
   };
@@ -92,9 +117,9 @@ const OnePercent = () => {
                 </li>
               ))}
             </ul>
-            {isLoading && <p>...loading...</p>}
-            {error && <p>Something went wrong!</p>}
-            {!isLoading && isEnd && <p>end</p>}
+            {/* {isLoading && <p>...loading...</p>} */}
+            {/* {error && <p>Something went wrong!</p>}
+            {!isLoading && isEnd && <p>end</p>} */}
           </div>
         </div>
       </div>

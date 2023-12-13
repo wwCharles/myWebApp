@@ -4,9 +4,9 @@ import { useLogoutUser } from "../api-calls/UserApi";
 export default function Topbar() {
   return (
     <section className="topbar">
-      <div className="flex justify-between">
-        {" "}
-        {/* Use justify-evenly here */}
+      <div className="flex-between py-4 px-5">
+        {/* <div className="flex justify-between"> */}
+
         <Link to="/" className="flex items-center">
           <h1 className="h3-bold md:h2-bold">juiced23</h1>
         </Link>

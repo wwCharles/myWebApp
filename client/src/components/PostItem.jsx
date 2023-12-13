@@ -18,8 +18,9 @@ import {
 import { BsArrowUpSquare } from "react-icons/bs";
 import { BsArrowDownSquare } from "react-icons/bs";
 import { GrFlag } from "react-icons/gr";
+import SquareAd from "./SquareAd";
+import { parse } from "dotenv";
 //
-import AdsComponent from "./SquareAd";
 
 export default function PostItem({ card, index }) {
   SwiperCore.use([Navigation, Pagination]);
@@ -102,36 +103,37 @@ export default function PostItem({ card, index }) {
     }
   };
 
-  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
+  // const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
   // ...
 
-  const handleImageLoad = () => {
-    // Check if all images are loaded
-    const allImagesLoaded = card.imageUrls.every((imageUrl) => {
-      // if (imageUrl)
-      // console.log(card.length);
-      // Implement the logic to check if the image is loaded
-      // You can use a ref to track the image load status
-      // For simplicity, assuming all images are loaded here
-      return true;
-    });
+  // const handleImageLoad = () => {
+  //   // Check if all images are loaded
+  //   const allImagesLoaded = card.imageUrls.every((imageUrl) => {
+  //     // if (imageUrl)
+  //     // console.log(card.length);
+  //     // Implement the logic to check if the image is loaded
+  //     // You can use a ref to track the image load status
+  //     // For simplicity, assuming all images are loaded here
+  //     return true;
+  //   });
 
-    // // Update the state
-    setAllImagesLoaded(allImagesLoaded);
-  };
+  //   // // Update the state
+  //   setAllImagesLoaded(allImagesLoaded);
+  // };
 
   return (
     <>
       {!slideVisibility ? (
         // Render different content when slideVisibility is true
         <div>
-          <AdsComponent dataAdSlot="6097104098" />
+          <SquareAd dataAdSlot="6097104098" />
         </div>
       ) : (
         <div
-          className={`post-card ${allImagesLoaded ? "" : "opacity-0"}`}
-          onLoad={handleImageLoad}
+          className="post-card"
+          // className={`post-card ${true ? "" : "opacity-0"}`}
+          // onLoad={handleImageLoad}
         >
           {/* <div className={`post-card ${slideVisibility ? "" : "hidden"}`}> */}
           {/* {slideVisibility && ( */}
@@ -151,6 +153,7 @@ export default function PostItem({ card, index }) {
                   <img
                     src={imageUrl}
                     loading="eager"
+                    // className="post-card_img"
                     className="animate-in slide-in-from-bottom-48"
                   />
                 </SwiperSlide>

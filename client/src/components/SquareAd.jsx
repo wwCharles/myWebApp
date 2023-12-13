@@ -10,9 +10,9 @@ const SquareAd = (props) => {
   }, []);
 
   return (
-    <div className="bg-white">
-      <p>square</p>
-      {/* <!-- square ad --> */}
+    <div className="bg-black">
+      {/* <p>square</p> */}
+      {/* <!-- square --> */}
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}

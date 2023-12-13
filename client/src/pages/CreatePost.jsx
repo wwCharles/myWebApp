@@ -2,19 +2,23 @@ import React from "react";
 import PostForm from "../components/PostForm";
 import SquareAd from "../components/SquareAd";
 import HorizontalAd from "../components/HorizontalAd";
+import LeftSidebar from "../components/LeftSidebar";
+import Topbar from "../components/Topbar";
 
 export default function CreatePost() {
   return (
-    <div className="w-full md:flex ">
-      <SquareAd dataAdSlot="6097104098" />
+    <div className="w-full md:flex">
+      <Topbar />
+      <LeftSidebar />
+      {/* <SquareAd dataAdSlot="6097104098" /> */}
       <section className="flex flex-1 h-full">
-        <div className="flex flex-1 ">
-          <div className="common-container ">
-            <div className="max-w-5xl flex-start gap-3 justify-start w-full">
+        <div className="flex flex-1">
+          <div className="common-container">
+            {/* <div className="max-w-5xl flex-start gap-9 justify-start w-full">
               <h2 className="h3-bold md:h2-bold text-left w-full">
                 Create Post
               </h2>
-            </div>
+            </div> */}
 
             <PostForm action="Create" />
           </div>

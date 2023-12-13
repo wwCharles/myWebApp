@@ -5,6 +5,8 @@ import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
 import WelcomeModal from "../components/WelcomeModal";
 import HorizontalAd from "../components/HorizontalAd";
+import VerticalAd from "../components/VerticalAd";
+import SquareAd from "../components/SquareAd";
 // import AdsComponent from "../components/SquareAd";
 
 const Home = () => {
@@ -15,6 +17,7 @@ const Home = () => {
   const [showModal, setShowModal] = useState(true);
   const [lazy, setLazy] = useState(false);
   const [error, setError] = useState(false);
+  const [ad, setAd] = useState(false);
 
   // const handleCloseModal = () => {
   //   setShowModal(false);
@@ -24,40 +27,57 @@ const Home = () => {
 
   const getData = async () => {
     setIsLoading(true);
+
     try {
       const data = await getAllPost(skip);
-      // console.log(data);
+
       if (data.success === false) {
-        // Handle the error case
-        // console.error("Error fetching data:", error);
         setError(true);
         return;
       }
+
       if (!data || data.length === 0) {
-        // Handle the case where data is empty
-        // console.error("End of data:", data);
         setIsEnd(true);
         return;
       }
+
+      // Check the load status of each image in the data array
+      const updatedData = await Promise.all(
+        data.map(async (item) => {
+          const imageLoadPromises = item.imageUrls.map((imageUrl) => {
+            const img = new Image();
+
+            return new Promise((resolve, reject) => {
+              img.onload = () => resolve(true);
+              img.onerror = () => reject(false);
+              img.src = imageUrl;
+            });
+          });
+
+          // Wait for all promises to resolve (all images loaded) or reject (at least one image failed to load)
+          try {
+            await Promise.all(imageLoadPromises);
+            return { ...item, allImagesLoaded: true };
+          } catch (error) {
+            // Handle the case where at least one image failed to load
+            return { ...item, allImagesLoaded: false };
+          }
+        })
+      );
+
       // Update the state with the fetched data
-      setItems((prevItems) => [...prevItems, ...data]);
+      setItems((prevItems) => {
+        const uniqueItems = new Set([...prevItems, ...updatedData]);
+        return [...uniqueItems];
+      });
+
+      setAd(true);
     } catch (error) {
-      // Handle fetch errors
-      // console.error("Error during fetch:", error);
       setError(true);
     } finally {
-      // Ensure loading state is set to false regardless of success or failure
       setIsLoading(false);
     }
   };
-
-  // const handleScroll = (e) => {
-  //   const { offsetHeight, scrollTop, scrollHeight } = e.target;
-
-  //   if (offsetHeight + scrollTop >= scrollHeight) {
-  //     setSkip(items?.length);
-  //   }
-  // };
 
   const handleCloseModal = useCallback(() => {
     setShowModal(false);
@@ -95,29 +115,37 @@ const Home = () => {
     <div className="w-full md:flex">
       <LeftSidebar />
       <Topbar />
+      {/* <SquareAd /> */}
       {showModal && <WelcomeModal onClose={handleCloseModal} />}
 
-      <section className="flex flex-1 h-full">
+      {/* <section className="flex flex-1 h-full"> */}
+      <div className="flex flex-1 h-full">
         <div className="home-container" onScroll={handleScroll}>
           <div className="home-posts">
             <ul
               // className="flex flex-col flex-1 gap-10 w-full"
-              className={`flex flex-col flex-1 gap-0 w-full opacity-0 transition-opacity duration-1000 ${
+              className={`flex flex-col flex-1 gap-9 w-full opacity-0 transition-opacity duration-1000 ${
                 lazy && "opacity-100"
               } `}
             >
               {items?.map((item, index) => (
                 <li key={index} className="flex justify-center w-full">
-                  <PostItem card={item} index={index} />
+                  <PostItem card={item} index={items} />
                 </li>
               ))}
             </ul>
           </div>
+          {/* {isLoading && <p>...loading...</p>} */}
           {/* {isLoading && <p>...loading...</p>}
           {error && <p>Something went wrong!</p>}
           {!isLoading && isEnd && <p className="-mt-10">end</p>} */}
         </div>
-      </section>
+
+        <div className="home-creators">
+          <VerticalAd dataAdSlot="4018192515" />
+        </div>
+      </div>
+
       <HorizontalAd dataAdSlot="2114654726" />
     </div>
   );
