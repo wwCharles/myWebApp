@@ -167,7 +167,7 @@ export default function PostForm() {
   }, [formData]);
 
   return (
-    <form className="flex flex-col gap-9 w-fullmax-w-5xl ">
+    <form className="flex flex-col gap-10 w-full max-w-5xl ">
       <div className="flex flex-center flex-col">
         <input
           type="file"

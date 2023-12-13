@@ -10,8 +10,8 @@ const HorizontalAd = (props) => {
   }, []);
 
   return (
-    <div className="bottom-bar">
-      <p>ok</p>
+    <div className="z-50 flex-between w-full sticky bottom-0 md:hidden bg-white">
+      <p>horizontal</p>
       {/* <!-- square ad --> */}
       <ins
         className="adsbygoogle"
@@ -26,3 +26,6 @@ const HorizontalAd = (props) => {
 };
 
 export default HorizontalAd;
+// .bottom-bar {
+//   @apply z-50 flex-between w-full sticky bottom-0 md:hidden;
+// }

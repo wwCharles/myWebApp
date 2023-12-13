@@ -227,7 +227,7 @@
 
   /* Bottom bar */
   .bottom-bar {
-    @apply z-50 flex-between w-full sticky bottom-0  bg-dark-1 md:hidden;
+    @apply z-50 flex-between w-full sticky bottom-0 md:hidden;
   }
 
   /* File uploader */

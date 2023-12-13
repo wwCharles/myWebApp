@@ -97,12 +97,12 @@ const Home = () => {
       <Topbar />
       {showModal && <WelcomeModal onClose={handleCloseModal} />}
 
-      <div className="flex flex-1 h-full ">
+      <section className="flex flex-1 h-full">
         <div className="home-container" onScroll={handleScroll}>
           <div className="home-posts">
             <ul
               // className="flex flex-col flex-1 gap-10 w-full"
-              className={`flex flex-col flex-1 gap-10 w-full opacity-0 transition-opacity duration-1000 ${
+              className={`flex flex-col flex-1 gap-0 w-full opacity-0 transition-opacity duration-1000 ${
                 lazy && "opacity-100"
               } `}
             >
@@ -112,15 +112,25 @@ const Home = () => {
                 </li>
               ))}
             </ul>
-            {isLoading && <p>...loading...</p>}
-            {error && <p>Something went wrong!</p>}
-            {!isLoading && isEnd && <p>end</p>}
           </div>
+          {/* {isLoading && <p>...loading...</p>}
+          {error && <p>Something went wrong!</p>}
+          {!isLoading && isEnd && <p className="-mt-10">end</p>} */}
         </div>
-      </div>
+      </section>
       <HorizontalAd dataAdSlot="2114654726" />
     </div>
   );
 };
 
 export default Home;
+{
+  /* <div className="w-full md:flex ">
+  <Topbar />
+  <LeftSidebar />
+
+  <section className="flex flex-1 h-full ">
+    <Outlet />
+  </section>
+</div>; */
+}

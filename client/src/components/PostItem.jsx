@@ -18,6 +18,7 @@ import {
 import { BsArrowUpSquare } from "react-icons/bs";
 import { BsArrowDownSquare } from "react-icons/bs";
 import { GrFlag } from "react-icons/gr";
+//
 import AdsComponent from "./SquareAd";
 
 export default function PostItem({ card, index }) {
@@ -135,6 +136,10 @@ export default function PostItem({ card, index }) {
           {/* <div className={`post-card ${slideVisibility ? "" : "hidden"}`}> */}
           {/* {slideVisibility && ( */}
           <>
+            <div className="md:text-xl h3-bold md:h2-bold mt-0">
+              {/* {card.location && <sub>⌂__{card.location}</sub>} */}
+              {card.caption && <p>"{card.caption}"</p>}
+            </div>
             <Swiper
               autoHeight={true}
               pagination={{ clickable: true }}
@@ -205,11 +210,11 @@ export default function PostItem({ card, index }) {
                 </p>
               )}
             </div>
-            <div className="md:text-xl h3-bold md:h2-bold mt-2">
+            {/* <div className="md:text-xl h3-bold md:h2-bold mt-2">
               {card.location && <sub>⌂__{card.location}</sub>}
               {card.caption && <p>"{card.caption}"</p>}
-            </div>
-            <hr className="border-gray-800" />
+            </div> */}
+            <hr className="border-gray-800 mt-4" />
           </>
         </div>
       )}
