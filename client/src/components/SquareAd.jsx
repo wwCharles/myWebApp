@@ -10,7 +10,7 @@ const SquareAd = (props) => {
   }, []);
 
   return (
-    <>
+    <div className="">
       <p>ok</p>
       {/* <!-- square ad --> */}
       <ins
@@ -21,7 +21,7 @@ const SquareAd = (props) => {
         data-ad-format="auto"
         data-full-width-responsive="true"
       ></ins>
-    </>
+    </div>
   );
 };
 

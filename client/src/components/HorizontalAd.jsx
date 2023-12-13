@@ -10,7 +10,7 @@ const HorizontalAd = (props) => {
   }, []);
 
   return (
-    <>
+    <div className="bottom-bar">
       <p>ok</p>
       {/* <!-- square ad --> */}
       <ins
@@ -21,7 +21,7 @@ const HorizontalAd = (props) => {
         data-ad-format="auto"
         data-full-width-responsive="true"
       ></ins>
-    </>
+    </div>
   );
 };
 
