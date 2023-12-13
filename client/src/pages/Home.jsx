@@ -112,42 +112,42 @@ const Home = () => {
   }, [isLoading]);
 
   return (
-    <div className="w-full md:flex">
-      <LeftSidebar />
-      <Topbar />
-      {/* <SquareAd /> */}
-      {showModal && <WelcomeModal onClose={handleCloseModal} />}
+    // <div className="w-full md:flex">
+    // {/* <LeftSidebar /> */}
+    // {/* <Topbar /> */}
+    // {/* <SquareAd /> */}
+    // {showModal && <WelcomeModal onClose={handleCloseModal} />}
 
-      {/* <section className="flex flex-1 h-full"> */}
-      <div className="flex flex-1 h-full">
-        <div className="home-container" onScroll={handleScroll}>
-          <div className="home-posts">
-            <ul
-              // className="flex flex-col flex-1 gap-10 w-full"
-              className={`flex flex-col flex-1 gap-9 w-full opacity-0 transition-opacity duration-1000 ${
-                lazy && "opacity-100"
-              } `}
-            >
-              {items?.map((item, index) => (
-                <li key={index} className="flex justify-center w-full">
-                  <PostItem card={item} index={items} />
-                </li>
-              ))}
-            </ul>
-          </div>
-          {/* {isLoading && <p>...loading...</p>} */}
-          {/* {isLoading && <p>...loading...</p>}
+    // {/* <section className="flex flex-1 h-full"> */}
+    <div className="flex flex-1 w-full ">
+      <div className="home-container " onScroll={handleScroll}>
+        <div className="home-posts ">
+          <ul
+            // className="flex flex-col flex-1 gap-10 w-full"
+            className={`flex flex-col flex-1 gap-9 w-full opacity-0 transition-opacity duration-1000 ${
+              lazy && "opacity-100"
+            } `}
+          >
+            {items?.map((item, index) => (
+              <li key={index} className="flex justify-center w-full">
+                <PostItem card={item} index={items} />
+              </li>
+            ))}
+          </ul>
+        </div>
+        {/* {isLoading && <p>...loading...</p>} */}
+        {/* {isLoading && <p>...loading...</p>}
           {error && <p>Something went wrong!</p>}
           {!isLoading && isEnd && <p className="-mt-10">end</p>} */}
-        </div>
-
-        <div className="home-creators">
-          <VerticalAd dataAdSlot="4018192515" />
-        </div>
       </div>
 
-      <HorizontalAd dataAdSlot="2114654726" />
+      <div className="home-creators">
+        <VerticalAd dataAdSlot="4018192515" />
+      </div>
     </div>
+
+    // <HorizontalAd dataAdSlot="2114654726" />
+    // </div>
   );
 };
 

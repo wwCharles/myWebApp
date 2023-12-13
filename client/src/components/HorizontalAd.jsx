@@ -10,7 +10,7 @@ const HorizontalAd = (props) => {
   }, []);
 
   return (
-    <div className="z-50 flex-between w-full sticky bottom-0 md:hidden bg-black">
+    <div className="z-50 w-full sticky bottom-0 md:hidden bg-dark-1 h-[50px]">
       {/* <p>horizontal</p> */}
       {/* <!-- horizontal --> */}
       <ins

@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
-// import OnePercent from "./pages/OnePercent";
 
 // Lazy-loaded components
+
 // const OAuth = lazy(() => import("./pages/OAuth"));
-// const PrivateRoute = lazy(() => import("./components/PrivateRoutes"));
+const PrivateRoute = lazy(() => import("./components/PrivateRoutes"));
 const Home = lazy(() => import("./pages/Home"));
 // const Profile = lazy(() => import("./pages/Profile"));
 const CreatePost = lazy(() => import("./pages/CreatePost"));
@@ -18,70 +18,37 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/"
-            element={
-              <Suspense>
-                <Home />
-              </Suspense>
-            }
-          />
-          {/* <Route
-            path="/oauth"
-            element={
-              <Suspense>
-                <OAuth />
-              </Suspense>
-            }
-          /> */}
-
-          {/* <Route
             element={
               <Suspense>
                 <PrivateRoute />
               </Suspense>
             }
-          > */}
-          {/* <Route
-              path="/profile/:id"
+          >
+            <Route
+              path="/"
               element={
                 <Suspense>
-                  <Profile />
+                  <Home />
                 </Suspense>
               }
-            /> */}
-          <Route
-            path="/create-post"
-            element={
-              <Suspense>
-                <CreatePost />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/one"
-            element={
-              <Suspense>
-                <OnePercent />
-              </Suspense>
-            }
-          />
-          {/* <Route
-            path="/post/:id"
-            element={
-              <Suspense>
-                <PostPage />
-              </Suspense>
-            }
-          /> */}
-          {/* <Route
-              path="/friends/:id"
+            />
+            <Route
+              path="/create-post"
               element={
                 <Suspense>
-                  <Friends />
+                  <CreatePost />
                 </Suspense>
               }
-            /> */}
-          {/* </Route> */}
+            />
+            <Route
+              path="/one"
+              element={
+                <Suspense>
+                  <OnePercent />
+                </Suspense>
+              }
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </main>
@@ -89,3 +56,38 @@ function App() {
 }
 
 export default App;
+
+// <Route
+//   path="/post/:id"
+//   element={
+//     <Suspense>
+//       <PostPage />
+//     </Suspense>
+//   }/>
+
+// <Route
+//     path="/friends/:id"
+//     element={
+//       <Suspense>
+//         <Friends />
+//       </Suspense>
+//     }
+//   />
+
+//    <Route
+//     path="/profile/:id"
+//     element={
+//       <Suspense>
+//         <Profile />
+//       </Suspense>
+//     }
+//   />
+
+//   <Route
+//   path="/oauth"
+//   element={
+//     <Suspense>
+//       <OAuth />
+//     </Suspense>
+//   }
+// />

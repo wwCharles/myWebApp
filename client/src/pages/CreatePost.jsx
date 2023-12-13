@@ -7,25 +7,25 @@ import Topbar from "../components/Topbar";
 
 export default function CreatePost() {
   return (
-    <div className="w-full md:flex">
-      <Topbar />
-      <LeftSidebar />
-      {/* <SquareAd dataAdSlot="6097104098" /> */}
-      <section className="flex flex-1 h-full">
-        <div className="flex flex-1">
-          <div className="common-container">
-            {/* <div className="max-w-5xl flex-start gap-9 justify-start w-full">
+    // <div className="w-full md:flex">
+    //   <Topbar />
+    //   <LeftSidebar />
+    // {/* <SquareAd dataAdSlot="6097104098" /> */}
+    // <section className="flex flex-1 h-full">
+    <div className="flex flex-1">
+      <div className="common-container">
+        {/* <div className="max-w-5xl flex-start gap-9 justify-start w-full">
               <h2 className="h3-bold md:h2-bold text-left w-full">
                 Create Post
               </h2>
             </div> */}
 
-            <PostForm action="Create" />
-          </div>
-        </div>
-      </section>
-      <HorizontalAd dataAdSlot="2114654726" />
+        <PostForm action="Create" />
+      </div>
     </div>
+    // </section>
+    // <HorizontalAd dataAdSlot="2114654726" />
+    // </div>
   );
 }
 {
