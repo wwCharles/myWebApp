@@ -60,6 +60,7 @@ export function useGetPostbyId() {
 export function useGetAllPost() {
   const getAllPost = async (skip) => {
     const res = await fetch(`api/post/get?skip=${skip}`);
+    // console.log(res);
     const data = await res.json();
     return data;
   };

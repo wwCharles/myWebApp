@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const AdsComponent = (props) => {
+const HorizontalAd = (props) => {
   const { dataAdSlot } = props;
 
   useEffect(() => {
@@ -11,9 +11,10 @@ const AdsComponent = (props) => {
 
   return (
     <>
+      <p>ok</p>
       {/* <!-- square ad --> */}
       <ins
-        className="adsbygoogle"
+        class="adsbygoogle"
         style={{ display: "block" }}
         data-ad-client="ca-pub-5969680534034624"
         data-ad-slot={dataAdSlot}
@@ -24,4 +25,4 @@ const AdsComponent = (props) => {
   );
 };
 
-export default AdsComponent;
+export default HorizontalAd;

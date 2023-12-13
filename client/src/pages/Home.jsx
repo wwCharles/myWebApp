@@ -4,6 +4,8 @@ import PostItem from "../components/PostItem";
 import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
 import WelcomeModal from "../components/WelcomeModal";
+import HorizontalAd from "../components/HorizontalAd";
+// import AdsComponent from "../components/SquareAd";
 
 const Home = () => {
   const [items, setItems] = useState([]);
@@ -116,6 +118,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <HorizontalAd dataAdSlot="2114654726" />
     </div>
   );
 };

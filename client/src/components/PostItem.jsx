@@ -18,7 +18,7 @@ import {
 import { BsArrowUpSquare } from "react-icons/bs";
 import { BsArrowDownSquare } from "react-icons/bs";
 import { GrFlag } from "react-icons/gr";
-import AdsComponent from "./AdsComponent";
+import AdsComponent from "./SquareAd";
 
 export default function PostItem({ card, index }) {
   SwiperCore.use([Navigation, Pagination]);
