@@ -116,10 +116,10 @@ const Home = () => {
     // {/* <LeftSidebar /> */}
     // {/* <Topbar /> */}
     // {/* <SquareAd /> */}
-    // {showModal && <WelcomeModal onClose={handleCloseModal} />}
 
     // {/* <section className="flex flex-1 h-full"> */}
     <div className="flex flex-1 w-full ">
+      {showModal && <WelcomeModal onClose={handleCloseModal} />}
       <div className="home-container " onScroll={handleScroll}>
         <div className="home-posts ">
           <ul

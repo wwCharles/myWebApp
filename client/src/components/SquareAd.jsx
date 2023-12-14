@@ -6,7 +6,9 @@ const SquareAd = (props) => {
   useEffect(() => {
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {}
+    } catch (e) {
+      console.error("Error loading AdSense:", e);
+    }
   }, []);
 
   return (

@@ -6,7 +6,9 @@ const HorizontalAd = (props) => {
   useEffect(() => {
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {}
+    } catch (e) {
+      console.error("Error loading AdSense:", e);
+    }
   }, []);
 
   return (
@@ -26,6 +28,3 @@ const HorizontalAd = (props) => {
 };
 
 export default HorizontalAd;
-// .bottom-bar {
-//   @apply z-50 flex-between w-full sticky bottom-0 md:hidden;
-// }
