@@ -19,37 +19,36 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
+            path="/"
+            element={
+              <Suspense>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/create-post"
+            element={
+              <Suspense>
+                <CreatePost />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/one"
+            element={
+              <Suspense>
+                <OnePercent />
+              </Suspense>
+            }
+          />
+          <Route
             element={
               <Suspense>
                 <PrivateRoute />
               </Suspense>
             }
-          >
-            <Route
-              path="/"
-              element={
-                <Suspense>
-                  <Home />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/create-post"
-              element={
-                <Suspense>
-                  <CreatePost />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/one"
-              element={
-                <Suspense>
-                  <OnePercent />
-                </Suspense>
-              }
-            />
-          </Route>
+          ></Route>
         </Routes>
       </BrowserRouter>
     </main>

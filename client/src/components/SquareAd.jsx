@@ -12,7 +12,7 @@ const SquareAd = (props) => {
   }, []);
 
   return (
-    <div className="bg-dark-2 h-[300px]">
+    <div className="bg-dark-2 border">
       {/* <p>ad</p> */}
       {/* <!-- square --> */}
       <ins

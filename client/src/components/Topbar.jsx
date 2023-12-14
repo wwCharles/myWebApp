@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useLogoutUser } from "../api-calls/UserApi";
+// import { useLogoutUser } from "../api-calls/UserApi";
 
 export default function Topbar() {
   return (
     <section className="topbar">
-      <div className="flex-between py-4 px-5">
+      <div className="flex-between px-2">
         {/* <div className="flex justify-between"> */}
 
         <Link to="/" className="flex items-center">
