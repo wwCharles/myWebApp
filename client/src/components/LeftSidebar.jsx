@@ -5,7 +5,7 @@ export default function LeftSidebar() {
     <nav className="leftsidebar">
       <div className="flex flex-col">
         <Link to="/" className="flex gap-3 items-center">
-          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:bg-blue-500">
+          <h1 className="h3-bold md:h2-bold pt-2 sm:pt-6 hover:text-blue-500">
             juiced23
           </h1>
         </Link>

@@ -6,22 +6,25 @@
 
 @layer base {
   /* Remove the blue highlight on click for all elements */
-  *:focus {
-    outline: none;
+  .no-tap-highlight {
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight color in WebKit browsers */
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
+  .ab::-webkit-scrollbar {
     display: none;
   }
 
   /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+  .ab {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
+
   * {
-    @apply box-border list-none p-0 m-0 scroll-smooth;
+    @apply box-border list-none p-0 m-0 scroll-smooth no-tap-highlight;
   }
 
   body {
@@ -125,7 +128,7 @@
     @apply flex justify-start items-center;
   }
 
-  .custom-scrollbar::-webkit-scrollbar {
+  /* .custom-scrollbar::-webkit-scrollbar {
     width: 3px;
     height: 3px;
     border-radius: 2px;
@@ -136,15 +139,40 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    /* background: #5c5c7b; */
-    background: grey;
+    background: #5c5c7b;
     border-radius: 50px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    /* background: #7878a3; */
-    background: grey;
+    background: #7878a3;
+  } */
+
+  /* For Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: gray;
   }
+
+  /* For WebKit-based browsers (Chrome, Safari) */
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 2px;
+    height: 0;
+    /* border-radius: 0; */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: none;
+    /* border-radius: 50px; */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: gray;
+  }
+
+  /* .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: red;
+  } */
 
   /* removed items-center */
   .common-container {
@@ -175,23 +203,16 @@
 
   /* Home */
   .home-container {
-    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10  md:px-8 lg:p-14 custom-scrollbar;
-  }
-
-  /* .home-container {
     @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
-  } */
+  }
 
   .home-posts {
     @apply max-w-screen-sm flex flex-col items-center w-full gap-6 md:gap-9;
   }
 
   .home-creators {
-    @apply hidden xl:flex flex-col w-72 2xl:w-465 py-10 gap-10  overflow-scroll custom-scrollbar;
-  }
-  /* .home-creators {
     @apply hidden xl:flex flex-col w-72 2xl:w-465 px-6 py-10 gap-10  overflow-scroll custom-scrollbar;
-  } */
+  }
 
   /* Post Details */
   .post_details-container {

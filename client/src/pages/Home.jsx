@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useGetAllPost } from "../api-calls/PostApi";
 import PostItem from "../components/PostItem";
-// import LeftSidebar from "../components/LeftSidebar";
-// import Topbar from "../components/Topbar";
+import LeftSidebar from "../components/LeftSidebar";
+import Topbar from "../components/Topbar";
 import WelcomeModal from "../components/WelcomeModal";
-// import HorizontalAd from "../components/HorizontalAd";
+import HorizontalAd from "../components/HorizontalAd";
 import VerticalAd from "../components/VerticalAd";
 // import SquareAd from "../components/SquareAd";
 // import AdsComponent from "../components/SquareAd";
@@ -19,9 +19,74 @@ const Home = () => {
   const [error, setError] = useState(false);
   const [ad, setAd] = useState(false);
 
-  // const handleCloseModal = () => {
-  //   setShowModal(false);
-  // };
+  const data = [
+    {
+      _id: { $oid: "657995efffadf5e5c5d0000f" },
+      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
+      location: "",
+      caption: "old school classic",
+      createdAt: { $date: { $numberLong: "1702467055382" } },
+      updatedAt: { $date: { $numberLong: "1702528906447" } },
+      // __v: { $numberInt: "0" },
+      likes: 2,
+      redflag: 1,
+    },
+    {
+      _id: { $oid: "657995efffadf5e5c5d0000p" },
+      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
+      location: "",
+      caption: "old school classic",
+      createdAt: { $date: { $numberLong: "1702467055382" } },
+      updatedAt: { $date: { $numberLong: "1702528906447" } },
+      // __v: { $numberInt: "0" },
+      likes: 2,
+      redflag: 1,
+    },
+    {
+      _id: { $oid: "657995efffadf5e5c5d0000l" },
+      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
+      location: "",
+      caption: "old school classic",
+      createdAt: { $date: { $numberLong: "1702467055382" } },
+      updatedAt: { $date: { $numberLong: "1702528906447" } },
+      // __v: { $numberInt: "0" },
+      likes: 2,
+      redflag: 1,
+    },
+    {
+      _id: { $oid: "657995efffadf5e5c5d0000l" },
+      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
+      location: "",
+      caption: "old school classic",
+      createdAt: { $date: { $numberLong: "1702467055382" } },
+      updatedAt: { $date: { $numberLong: "1702528906447" } },
+      // __v: { $numberInt: "0" },
+      likes: 2,
+      redflag: 1,
+    },
+    {
+      _id: { $oid: "657995efffadf5e5c5d0000l" },
+      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
+      location: "",
+      caption: "old school classic",
+      createdAt: { $date: { $numberLong: "1702467055382" } },
+      updatedAt: { $date: { $numberLong: "1702528906447" } },
+      // __v: { $numberInt: "0" },
+      likes: 2,
+      redflag: 1,
+    },
+    {
+      _id: { $oid: "657995efffadf5e5c5d0000l" },
+      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
+      location: "",
+      caption: "old school classic",
+      createdAt: { $date: { $numberLong: "1702467055382" } },
+      updatedAt: { $date: { $numberLong: "1702528906447" } },
+      // __v: { $numberInt: "0" },
+      likes: 2,
+      redflag: 1,
+    },
+  ];
 
   const getAllPost = useGetAllPost();
 
@@ -113,17 +178,15 @@ const Home = () => {
 
   return (
     // <div className="w-full md:flex">
-    // {/* <LeftSidebar /> */}
-    // {/* <Topbar /> */}
-    // {/* <SquareAd /> */}
+    //   <Topbar />
+    //   <LeftSidebar />
 
-    // {/* <section className="flex flex-1 h-full"> */}
-    <div className="flex flex-1 w-full ">
+    // <section className="flex flex-1 h-full">
+    <div className="flex flex-1 w-full">
       {showModal && <WelcomeModal onClose={handleCloseModal} />}
-      <div className="home-container " onScroll={handleScroll}>
-        <div className="home-posts ">
+      <div className="home-container" onScroll={handleScroll}>
+        <div className="home-posts">
           <ul
-            // className="flex flex-col flex-1 gap-10 w-full"
             className={`flex flex-col flex-1 gap-9 w-full opacity-0 transition-opacity duration-1000 ${
               lazy && "opacity-100"
             } `}
@@ -135,16 +198,18 @@ const Home = () => {
             ))}
           </ul>
         </div>
-        {/* {isLoading && <p>...loading...</p>} */}
-        {/* {isLoading && <p>...loading...</p>}
-          {error && <p>Something went wrong!</p>}
-          {!isLoading && isEnd && <p className="-mt-10">end</p>} */}
       </div>
 
       <div className="home-creators">
-        <VerticalAd dataAdSlot="4018192515" />
+        <script
+          async="async"
+          data-cfasync="false"
+          src="//ophoacit.com/1?z=6752526"
+        ></script>
+        {/* <VerticalAd dataAdSlot="4018192515" /> */}
       </div>
     </div>
+    // </section>
 
     // <HorizontalAd dataAdSlot="2114654726" />
     // </div>
@@ -152,13 +217,16 @@ const Home = () => {
 };
 
 export default Home;
-{
-  /* <div className="w-full md:flex ">
-  <Topbar />
-  <LeftSidebar />
 
-  <section className="flex flex-1 h-full ">
-    <Outlet />
-  </section>
-</div>; */
-}
+/* Home */
+// .home-container {
+//   @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
+// }
+
+// .home-posts {
+//   @apply max-w-screen-sm flex flex-col items-center w-full gap-6 md:gap-9;
+// }
+
+// .home-creators {
+//   @apply hidden xl:flex flex-col w-72 2xl:w-465 px-6 py-10 gap-10  overflow-scroll custom-scrollbar;
+// }

@@ -7,7 +7,7 @@ import HorizontalAd from "./HorizontalAd";
 export default function PrivateRoute() {
   const { currentUser } = useSelector((state) => state.user);
 
-  if (currentUser) {
+  if (currentUser || !currentUser) {
     return (
       <div className="w-full md:flex ">
         <Topbar />
@@ -19,18 +19,19 @@ export default function PrivateRoute() {
       </div>
     );
   }
-  if (!currentUser) {
-    return (
-      <div className="w-full md:flex">
-        <Topbar />
-        <LeftSidebar />
 
-        <section className="flex flex-1 h-full">
-          <Outlet />
-        </section>
-        <HorizontalAd dataAdSlot="2114654726" />
-      </div>
-    );
-  }
+  // if (!currentUser) {
+  //   return (
+  //     <div className="w-full md:flex">
+  //       <Topbar />
+  //       <LeftSidebar />
+
+  //       <section className="flex flex-1 h-full">
+  //         <Outlet />
+  //       </section>
+  //       <HorizontalAd dataAdSlot="2114654726" />
+  //     </div>
+  //   );
+  // }
   // if (!currentUser) return <Navigate to="/oauth" />;
 }
