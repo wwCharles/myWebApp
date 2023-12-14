@@ -32,7 +32,23 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
 
-app.use(express.static(path.join(__dirname, `/client/dist`)));
+app.use(
+  "/ads.txt",
+  (req, res, next) => {
+    res.header("Cache-Control", "no-cache");
+    next();
+  },
+  express.static(path.join(__dirname, `/client/dist`))
+);
+
+// app.use(
+//   "/ads.txt",
+//   (req, res, next) => {
+//     res.header("Cache-Control", "no-cache");
+//     next();
+//   },
+//   express.static(path.join(__dirname, "public"))
+// );
 
 app.get(`*`, (req, res) => {
   res.sendFile(path.join(__dirname, `client`, `dist`, `index.html`));
