@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useGetAllPost } from "../api-calls/PostApi";
 import PostItem from "../components/PostItem";
-import LeftSidebar from "../components/LeftSidebar";
-import Topbar from "../components/Topbar";
+// import LeftSidebar from "../components/LeftSidebar";
+// import Topbar from "../components/Topbar";
 import WelcomeModal from "../components/WelcomeModal";
-import HorizontalAd from "../components/HorizontalAd";
+// import HorizontalAd from "../components/HorizontalAd";
 import VerticalAd from "../components/VerticalAd";
 // import SquareAd from "../components/SquareAd";
 // import AdsComponent from "../components/SquareAd";
@@ -18,75 +18,6 @@ const Home = () => {
   const [lazy, setLazy] = useState(false);
   const [error, setError] = useState(false);
   const [ad, setAd] = useState(false);
-
-  const data = [
-    {
-      _id: { $oid: "657995efffadf5e5c5d0000f" },
-      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
-      location: "",
-      caption: "old school classic",
-      createdAt: { $date: { $numberLong: "1702467055382" } },
-      updatedAt: { $date: { $numberLong: "1702528906447" } },
-      // __v: { $numberInt: "0" },
-      likes: 2,
-      redflag: 1,
-    },
-    {
-      _id: { $oid: "657995efffadf5e5c5d0000p" },
-      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
-      location: "",
-      caption: "old school classic",
-      createdAt: { $date: { $numberLong: "1702467055382" } },
-      updatedAt: { $date: { $numberLong: "1702528906447" } },
-      // __v: { $numberInt: "0" },
-      likes: 2,
-      redflag: 1,
-    },
-    {
-      _id: { $oid: "657995efffadf5e5c5d0000l" },
-      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
-      location: "",
-      caption: "old school classic",
-      createdAt: { $date: { $numberLong: "1702467055382" } },
-      updatedAt: { $date: { $numberLong: "1702528906447" } },
-      // __v: { $numberInt: "0" },
-      likes: 2,
-      redflag: 1,
-    },
-    {
-      _id: { $oid: "657995efffadf5e5c5d0000l" },
-      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
-      location: "",
-      caption: "old school classic",
-      createdAt: { $date: { $numberLong: "1702467055382" } },
-      updatedAt: { $date: { $numberLong: "1702528906447" } },
-      // __v: { $numberInt: "0" },
-      likes: 2,
-      redflag: 1,
-    },
-    {
-      _id: { $oid: "657995efffadf5e5c5d0000l" },
-      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
-      location: "",
-      caption: "old school classic",
-      createdAt: { $date: { $numberLong: "1702467055382" } },
-      updatedAt: { $date: { $numberLong: "1702528906447" } },
-      // __v: { $numberInt: "0" },
-      likes: 2,
-      redflag: 1,
-    },
-    {
-      _id: { $oid: "657995efffadf5e5c5d0000l" },
-      imageUrls: [`/images/${1}.webp`, `/images/${2}.webp`],
-      location: "",
-      caption: "old school classic",
-      createdAt: { $date: { $numberLong: "1702467055382" } },
-      updatedAt: { $date: { $numberLong: "1702528906447" } },
-      // __v: { $numberInt: "0" },
-      likes: 2,
-      redflag: 1,
-    },
-  ];
 
   const getAllPost = useGetAllPost();
 
@@ -201,12 +132,7 @@ const Home = () => {
       </div>
 
       <div className="home-creators">
-        <script
-          async="async"
-          data-cfasync="false"
-          src="//ophoacit.com/1?z=6752526"
-        ></script>
-        {/* <VerticalAd dataAdSlot="4018192515" /> */}
+        <VerticalAd dataAdSlot="4018192515" />
       </div>
     </div>
     // </section>

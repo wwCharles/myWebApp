@@ -16,22 +16,10 @@ export default function PrivateRoute() {
         <section className="flex flex-1 h-full">
           <Outlet />
         </section>
+        <HorizontalAd dataAdSlot="2114654726" />
       </div>
     );
   }
 
-  // if (!currentUser) {
-  //   return (
-  //     <div className="w-full md:flex">
-  //       <Topbar />
-  //       <LeftSidebar />
-
-  //       <section className="flex flex-1 h-full">
-  //         <Outlet />
-  //       </section>
-  //       <HorizontalAd dataAdSlot="2114654726" />
-  //     </div>
-  //   );
-  // }
   // if (!currentUser) return <Navigate to="/oauth" />;
 }
