@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { useGetAllPost } from "../api-calls/PostApi";
 import PostItem from "../components/PostItem";
-import LeftSidebar from "../components/LeftSidebar";
-import Topbar from "../components/Topbar";
+// import LeftSidebar from "../components/LeftSidebar";
+// import Topbar from "../components/Topbar";
 import WelcomeModal from "../components/WelcomeModal";
-import HorizontalAd from "../components/HorizontalAd";
+// import HorizontalAd from "../components/HorizontalAd";
 import VerticalAd from "../components/VerticalAd";
-import SquareAd from "../components/SquareAd";
+// import SquareAd from "../components/SquareAd";
 // import AdsComponent from "../components/SquareAd";
 
 const Home = () => {

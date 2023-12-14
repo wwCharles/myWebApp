@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useGetOnePercent } from "../api-calls/PostApi";
 // import { useSelector } from "react-redux";
 import PostItem from "../components/PostItem";
-import LeftSidebar from "../components/LeftSidebar";
-import Topbar from "../components/Topbar";
+// import LeftSidebar from "../components/LeftSidebar";
+// import Topbar from "../components/Topbar";
 
 const OnePercent = () => {
   // const { currentUser } = useSelector((state) => state.user);

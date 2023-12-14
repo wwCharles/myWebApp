@@ -1,9 +1,9 @@
 import React from "react";
 import PostForm from "../components/PostForm";
-import SquareAd from "../components/SquareAd";
-import HorizontalAd from "../components/HorizontalAd";
-import LeftSidebar from "../components/LeftSidebar";
-import Topbar from "../components/Topbar";
+// import SquareAd from "../components/SquareAd";
+// import HorizontalAd from "../components/HorizontalAd";
+// import LeftSidebar from "../components/LeftSidebar";
+// import Topbar from "../components/Topbar";
 
 export default function CreatePost() {
   return (

@@ -13,7 +13,7 @@ export default function PrivateRoute() {
         <Topbar />
         <LeftSidebar />
 
-        <section className="flex flex-1 h-full ">
+        <section className="flex flex-1 h-full">
           <Outlet />
         </section>
       </div>
@@ -21,7 +21,7 @@ export default function PrivateRoute() {
   }
   if (!currentUser) {
     return (
-      <div className="w-full md:flex overflow-y-scroll no-scrollbar">
+      <div className="w-full md:flex">
         <Topbar />
         <LeftSidebar />
 
