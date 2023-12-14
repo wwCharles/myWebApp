@@ -6,6 +6,7 @@ import PostItem from "../components/PostItem";
 import WelcomeModal from "../components/WelcomeModal";
 // import HorizontalAd from "../components/HorizontalAd";
 import VerticalAd from "../components/VerticalAd";
+import OnePercent from "./OnePercent";
 // import SquareAd from "../components/SquareAd";
 // import AdsComponent from "../components/SquareAd";
 
@@ -132,7 +133,9 @@ const Home = () => {
       </div>
 
       <div className="home-creators">
-        <VerticalAd dataAdSlot="4018192515" />
+        {/* <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 fixed  ">Top Post</h1> */}
+        <OnePercent />
+        {/* <VerticalAd dataAdSlot="4018192515" /> */}
       </div>
     </div>
     // </section>
