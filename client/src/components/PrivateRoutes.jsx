@@ -16,7 +16,7 @@ export default function PrivateRoute() {
         <section className="flex flex-1 h-full">
           <Outlet />
         </section>
-        <HorizontalAd dataAdSlot="2114654726" />
+        {/* <HorizontalAd dataAdSlot="2114654726" /> */}
       </div>
     );
   }

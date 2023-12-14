@@ -12,12 +12,13 @@ const HorizontalAd = (props) => {
   }, []);
 
   return (
-    <div className="z-50 w-full sticky bottom-0 md:hidden bg-dark-1 h-[50px]">
+    // <div className="bottom-bar">
+    <div className="z-50 sticky bottom-0 md:hidden bg-white ">
       {/* <p>horizontal</p> */}
       {/* <!-- horizontal --> */}
       <ins
-        className="adsbygoogle"
-        style={{ display: "block" }}
+        class="adsbygoogle"
+        style={{ display: "block", maxWidth: "30%" }}
         data-ad-client="ca-pub-5969680534034624"
         data-ad-slot={dataAdSlot}
         data-ad-format="auto"
