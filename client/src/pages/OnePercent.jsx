@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useGetOnePercent } from "../api-calls/PostApi";
 // import { useSelector } from "react-redux";
 import PostItem from "../components/PostItem";
-// import LeftSidebar from "../components/LeftSidebar";
-// import Topbar from "../components/Topbar";
+import LeftSidebar from "../components/LeftSidebar";
+import Topbar from "../components/Topbar";
 
 const OnePercent = () => {
   // const { currentUser } = useSelector((state) => state.user);
@@ -99,31 +99,30 @@ const OnePercent = () => {
   }, [isLoading]);
 
   return (
-    // <div className="w-full md:flex">
-    //   <LeftSidebar />
-    //   <Topbar />
-
-    <div className="flex flex-1 w-full">
-      <div className="home-container" onScroll={handleScroll}>
-        <div className="home-posts">
-          <ul
-            className={`flex flex-col flex-1 gap-10 w-full opacity-0 transition-opacity duration-1000 ${
-              lazy && "opacity-100"
-            } `}
-          >
-            {items?.map((item, index) => (
-              <li className="flex justify-center w-full" key={index}>
-                <PostItem card={item} index={index} />
-              </li>
-            ))}
-          </ul>
-          {/* {isLoading && <p>...loading...</p>} */}
-          {/* {error && <p>Something went wrong!</p>}
+    <div className="w-full md:flex">
+      <Topbar />
+      <LeftSidebar />
+      <div className="flex flex-1 w-full -mt-4">
+        <div className="home-container" onScroll={handleScroll}>
+          <div className="home-posts">
+            <ul
+              className={`flex flex-col flex-1 gap-2 w-full opacity-0 transition-opacity duration-1000 ${
+                lazy && "opacity-100"
+              } `}
+            >
+              {items?.map((item, index) => (
+                <li className="flex justify-center w-full" key={index}>
+                  <PostItem card={item} index={index} />
+                </li>
+              ))}
+            </ul>
+            {/* {isLoading && <p>...loading...</p>} */}
+            {/* {error && <p>Something went wrong!</p>}
             {!isLoading && isEnd && <p>end</p>} */}
+          </div>
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 

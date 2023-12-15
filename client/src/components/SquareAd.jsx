@@ -12,18 +12,27 @@ const SquareAd = (props) => {
   }, []);
 
   return (
-    <div className="bg-dark-2 border">
-      {/* <p>ad</p> */}
-      {/* <!-- square --> */}
-      <ins
-        className="adsbygoogle"
-        style={{ display: "block" }}
-        data-ad-client="ca-pub-5969680534034624"
-        data-ad-slot={dataAdSlot}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      ></ins>
-    </div>
+    <ins
+      class="adsbygoogle"
+      style={{
+        // position: "realtive",
+        display: "block",
+        border: "1px solid gray",
+        height: "400px",
+        width: "400px",
+        color: "black",
+        textAlign: "center",
+        backgroundColor: "gray",
+      }}
+      data-ad-client="ca-pub-5969680534034624"
+      data-ad-slot={dataAdSlot}
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    >
+      {/* <p>
+          <strong>Advertisement</strong>
+        </p> */}
+    </ins>
   );
 };
 

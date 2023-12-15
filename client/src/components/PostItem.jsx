@@ -55,6 +55,7 @@ export default function PostItem({ card, index }) {
         setPolePosition(true);
       }
       setLike(status);
+      setSlideVisibility((prev) => !prev);
     } catch (error) {
       console.log(error);
     }
@@ -104,25 +105,6 @@ export default function PostItem({ card, index }) {
     }
   };
 
-  // const [allImagesLoaded, setAllImagesLoaded] = useState(false);
-
-  // ...
-
-  // const handleImageLoad = () => {
-  //   // Check if all images are loaded
-  //   const allImagesLoaded = card.imageUrls.every((imageUrl) => {
-  //     // if (imageUrl)
-  //     // console.log(card.length);
-  //     // Implement the logic to check if the image is loaded
-  //     // You can use a ref to track the image load status
-  //     // For simplicity, assuming all images are loaded here
-  //     return true;
-  //   });
-
-  //   // // Update the state
-  //   setAllImagesLoaded(allImagesLoaded);
-  // };
-
   return (
     <>
       {!slideVisibility ? (
@@ -131,13 +113,7 @@ export default function PostItem({ card, index }) {
           <SquareAd dataAdSlot="6097104098" />
         </div>
       ) : (
-        <div
-          className="post-card"
-          // className={`post-card ${true ? "" : "opacity-0"}`}
-          // onLoad={handleImageLoad}
-        >
-          {/* <div className={`post-card ${slideVisibility ? "" : "hidden"}`}> */}
-          {/* {slideVisibility && ( */}
+        <div className="post-card">
           <>
             <div className="md:text-xl h3-bold md:h2-bold mt-0">
               {/* {card.location && <sub>⌂__{card.location}</sub>} */}

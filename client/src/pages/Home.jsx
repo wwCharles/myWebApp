@@ -5,6 +5,7 @@ import Topbar from "../components/Topbar";
 import LeftSidebar from "../components/LeftSidebar";
 import WelcomeModal from "../components/WelcomeModal";
 import OnePercent from "./OnePercent";
+import SquareAd from "../components/SquareAd";
 
 const Home = () => {
   const [items, setItems] = useState([]);
@@ -105,16 +106,16 @@ const Home = () => {
   }, [isLoading]);
 
   return (
-    <div className="w-full md:flex">
+    <div className="w-full md:flex ">
       <Topbar />
       <LeftSidebar />
-      <section className="flex flex-1 h-full">
+      <section className="flex flex-1 h-full -mt-4 ">
         <div className="flex flex-1 w-full">
           {showModal && <WelcomeModal onClose={handleCloseModal} />}
           <div className="home-container" onScroll={handleScroll}>
             <div className="home-posts">
               <ul
-                className={`flex flex-col flex-1 gap-9 w-full opacity-0 transition-opacity duration-1000 ${
+                className={`flex flex-col flex-1 gap-2 w-full opacity-0 transition-opacity duration-1000 ${
                   lazy && "opacity-100"
                 } `}
               >
@@ -125,12 +126,8 @@ const Home = () => {
                 ))}
               </ul>
             </div>
-          </div>
-
-          <div className="home-creators">
-            {/* <h1 className="h3-bold md:h2-bold pt-4 sm:pt-8 fixed  ">Top Post</h1> */}
-            <OnePercent />
-            {/* <VerticalAd dataAdSlot="4018192515" /> */}
+            {isLoading && <p>loading</p>}
+            {isEnd && <p>no more posts</p>}
           </div>
         </div>
       </section>

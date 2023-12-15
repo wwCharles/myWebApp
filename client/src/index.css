@@ -11,12 +11,12 @@
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */
-  .ab::-webkit-scrollbar {
+  .a::-webkit-scrollbar {
     display: none;
   }
 
   /* Hide scrollbar for IE, Edge and Firefox */
-  .ab {
+  .a {
     -ms-overflow-style: none;
     /* IE and Edge */
     scrollbar-width: none;
@@ -157,9 +157,8 @@
 
   .custom-scrollbar::-webkit-scrollbar {
     width: 2px;
-    width: 2px;
     height: 1px;
-    background-color: transparent;
+    /* background-color: black; */
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
@@ -168,8 +167,8 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    /* background-color: gray; */
+    /* background-color: transparent; */
+    background-color: gray;
   }
 
   /* .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -213,7 +212,7 @@
   }
 
   .home-creators {
-    @apply hidden xl:flex flex-col w-80 2xl:w-465  gap-10  overflow-scroll custom-scrollbar;
+    @apply hidden xl:flex flex-col items-center w-80 2xl:w-465 mt-8 gap-2;
   }
 
   /* Post Details */

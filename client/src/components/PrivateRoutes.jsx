@@ -7,7 +7,7 @@ import HorizontalAd from "./HorizontalAd";
 export default function PrivateRoute() {
   const { currentUser } = useSelector((state) => state.user);
 
-  if (currentUser || !currentUser) {
+  if (currentUser) {
     return (
       <div className="w-full md:flex ">
         <Topbar />
@@ -21,5 +21,5 @@ export default function PrivateRoute() {
     );
   }
 
-  // if (!currentUser) return <Navigate to="/oauth" />;
+  if (!currentUser) return <Navigate to="/oauth" />;
 }
