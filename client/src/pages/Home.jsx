@@ -1,14 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGetAllPost } from "../api-calls/PostApi";
 import PostItem from "../components/PostItem";
-import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
+import LeftSidebar from "../components/LeftSidebar";
 import WelcomeModal from "../components/WelcomeModal";
-// import HorizontalAd from "../components/HorizontalAd";
-// import VerticalAd from "../components/VerticalAd";
 import OnePercent from "./OnePercent";
-// import SquareAd from "../components/SquareAd";
-// import AdsComponent from "../components/SquareAd";
 
 const Home = () => {
   const [items, setItems] = useState([]);
@@ -143,16 +139,3 @@ const Home = () => {
 };
 
 export default Home;
-
-/* Home */
-// .home-container {
-//   @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
-// }
-
-// .home-posts {
-//   @apply max-w-screen-sm flex flex-col items-center w-full gap-6 md:gap-9;
-// }
-
-// .home-creators {
-//   @apply hidden xl:flex flex-col w-72 2xl:w-465 px-6 py-10 gap-10  overflow-scroll custom-scrollbar;
-// }
