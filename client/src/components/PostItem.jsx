@@ -55,7 +55,7 @@ export default function PostItem({ card, index }) {
         setPolePosition(true);
       }
       setLike(status);
-      setSlideVisibility((prev) => !prev);
+      // setSlideVisibility((prev) => !prev);
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +68,7 @@ export default function PostItem({ card, index }) {
         return;
       }
       setDislike(status);
-      setSlideVisibility((prev) => !prev);
+      // setSlideVisibility((prev) => !prev);
     } catch (error) {
       console.log(error);
     }
@@ -110,7 +110,8 @@ export default function PostItem({ card, index }) {
       {!slideVisibility ? (
         // Render different content when slideVisibility is true
         <div className="post-card">
-          <SquareAd dataAdSlot="6097104098" />
+          <p>Post will be reviewed</p>
+          {/* <SquareAd dataAdSlot="6097104098" /> */}
         </div>
       ) : (
         <div className="post-card">
